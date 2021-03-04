@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>弹出框</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .mask {
+            background-color: rgba(0,0, 0, 0.8);
+        }
+        .dialog {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 300px;
+            height: 200px;
+            background-color: rgba(255,255, 255, 1);
+            border-radius: 10px;
+            margin: auto;
+            text-align: center;
+        }
+        .header {
+            height: 80%;
+            line-height: 160px;
+        }
+        .footer{
+            height: 20%;
+            display: flex;
+            flex-direction: row;
+        }
+        .confirm,
+        .cancel{
+            outline: none;
+            background-color: white;
+            width: 50%;
+        }
+        .confirm{
+            border-width: 1px 0px 0px 1px;
+            border-bottom-right-radius: 10px; 
+        }
+        .cancel{
+            border-width: 1px 0px 0px 0px;
+            border-bottom-left-radius: 10px; 
+        }
+
+    </style>
+</head>
+<body>
+    <button id="btn">弹出框</button>
+
+    <div class="dialog">
+        <p class="header">提示文字</p>
+        <div class="footer">
+            <button class="cancel">取消</button>
+            <button class="confirm">确认</button>
+        </div>
+    </div>
+
+    <script>
+        var btn = document.querySelector('#btn');
+        var dialog = document.querySelector('.dialog');
+        btn.addEventListener('click',function(){
+            document.body.className = 'mask';
+            dialog.style.display = "block";
+        })
+
+        var cancel = document.querySelector('.cancel');
+        var confirm = document.querySelector('.confirm');
+        function recover() {
+            document.body.className = '';
+            dialog.style.display = "none";
+        }
+        cancel.onclick = recover;
+        confirm.onclick = recover;
+    </script>
+</body>
+</html>
