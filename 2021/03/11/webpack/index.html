@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>webpack | shenshen's study blog</title><meta name="keywords" content="打包工具,webpack"><meta name="author" content="Shen Shen"><meta name="copyright" content="Shen Shen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="webpack 是什么？谈谈你对 webpack 的理解。  本质上，webpack 是一个现代 JavaScript 应用程序的静态模块打包器(module bundler)，可以使用它管理项目中的模块依赖。 将项目当作一个整体，通过一个给定的的主文件，webpack 将从这个文件开始找到你的项目的所有依赖文件，使用 loaders 处理它们，最后打包成一个或多个浏览器可识别的 js 文件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack">
+<meta property="og:url" content="http://example.com/2021/03/11/webpack/index.html">
+<meta property="og:site_name" content="shenshen&#39;s study blog">
+<meta property="og:description" content="webpack 是什么？谈谈你对 webpack 的理解。  本质上，webpack 是一个现代 JavaScript 应用程序的静态模块打包器(module bundler)，可以使用它管理项目中的模块依赖。 将项目当作一个整体，通过一个给定的的主文件，webpack 将从这个文件开始找到你的项目的所有依赖文件，使用 loaders 处理它们，最后打包成一个或多个浏览器可识别的 js 文件。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg">
+<meta property="article:published_time" content="2021-03-11T14:52:05.000Z">
+<meta property="article:modified_time" content="2021-03-11T15:31:03.811Z">
+<meta property="article:author" content="Shen Shen">
+<meta property="article:tag" content="打包工具">
+<meta property="article:tag" content="webpack">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/03/11/webpack/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-03-11 23:31:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">shenshen's study blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">webpack</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-11T14:52:05.000Z" title="发表于 2021-03-11 22:52:05">2021-03-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-11T15:31:03.811Z" title="更新于 2021-03-11 23:31:03">2021-03-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/webpack/">webpack</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">969</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><ol>
+<li><p><mycode>webpack</mycode> 是什么？谈谈你对 webpack 的理解。</p>
+<ul>
+<li>本质上，<mycode>webpack</mycode> 是一个现代 <mycode>JavaScript</mycode> 应用程序的静态模块打包器(<mycode>module bundler</mycode>)，可以使用它管理项目中的模块依赖。</li>
+<li>将项目当作一个整体，通过一个给定的的主文件，<mycode>webpack</mycode> 将从这个文件开始找到你的项目的所有依赖文件，使用 <mycode>loaders</mycode> 处理它们，最后打包成一个或多个浏览器可识别的 <mycode>js</mycode> 文件。</li>
+</ul>
+<p> <strong>核心概念：</strong></p>
+<ul>
+<li>入口( <mycode>entry</mycode> )</li>
+</ul>
+<ol>
+<li>指示 <mycode>webpack</mycode> 应该使用哪个模块，来作为构建其内部依赖图的开始。进入入口起点后，<mycode>webpack</mycode> 会找出有哪些模块和库是入口起点（直接和间接）依赖的。</li>
+<li>可以通过在 <mycode>webpack</mycode> 配置中配置 <mycode>entry</mycode> 属性，来指定一个入口起点（或多个入口起点）。默认值为 <mycode>./src</mycode>。</li>
+</ol>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">&#x27;./path/to/my/entry/file.js&#x27;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>输出( <mycode>output</mycode> )<br><mycode>output</mycode> 属性告诉 <mycode>webpack</mycode> 在哪里输出它所创建的 <mycode>bundles</mycode>，以及如何命名这些文件，默认值为 <mycode>./dist</mycode>。基本上，整个应用程序结构，都会被编译到你指定的输出路径的文件夹中。你可以通过在配置中指定一个 <mycode>output</mycode> 字段，来配置这些处理过程。</p>
+</li>
+<li><p>加载( <mycode>loader</mycode> )<br><mycode>loader</mycode> 让 <mycode>webpack</mycode> 能够去处理那些非 <mycode>JavaScript</mycode> 文件（ <mycode>webpack</mycode> 自身只理解 <mycode>JavaScript</mycode>）。<mycode>loader</mycode> 可以将所有类型的文件转换为 <mycode>webpack</mycode> 能够处理的有效模块。<br>在 webpack 的配置中 <mycode>loader</mycode> 有两个属性：</p>
+<ul>
+<li><mycode>test</mycode> 属性，用于标识出应该被对应的 <mycode>loader</mycode> 进行转换的某个或某些文件。</li>
+<li><mycode>use</mycode> 属性，表示进行转换时，应该使用哪个 <mycode>loader</mycode>。</li>
+<li><strong>注意：Webpack选择了compose方式，即从右到左执行loader</strong></li>
+</ul>
+</li>
+<li><p>插件( <mycode>plugins</mycode> )</p>
+</li>
+</ul>
+<ol>
+<li>插件的范围包括，<strong>从打包优化和压缩，一直到重新定义环境中的变量</strong>。插件接口功能极其强大，可以用来处理各种各样的任务。</li>
+<li><mycode>plugins</mycode> 需要暴露出一个 <mycode>class</mycode>, 在 <mycode>new WebpackPlugin()</mycode>的时候通过构造函数传入这个插件需要的参数，在webpack启动的时候会 <strong>先实例化plugin再调用plugin.apply()方法</strong>，插件需要在apply函数里监听webpack生命周期里的事件，做相应的处理。</li>
+</ol>
+<ul>
+<li>模式( <mycode>mode</mycode> )<br>通过选择 <mycode>development</mycode> 或 <mycode>production</mycode> 之中的一个，来设置 <mycode>mode</mycode> 参数，你可以启用相应模式下的 <mycode>webpack</mycode> 内置的优化。</li>
+</ul>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 多个入口</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">mode: <span class="string">&#x27;production&#x27;</span>,</span><br><span class="line">entry: &#123;</span><br><span class="line">    index: [<span class="string">&quot;./src/index.js&quot;</span>],</span><br><span class="line">    main: [<span class="string">&quot;./src/main.js&quot;</span>]</span><br><span class="line">&#125;,</span><br><span class="line">output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">    filename: <span class="string">&#x27;js/[name].[hash:8].js&#x27;</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">//配置服务</span></span><br><span class="line">devServer:&#123;</span><br><span class="line">    port: <span class="number">3000</span>, <span class="comment">// 更换端口</span></span><br><span class="line">    hot:<span class="literal">true</span>, <span class="comment">//启用热模块替换</span></span><br><span class="line">    inline:<span class="literal">true</span> </span><br><span class="line">    <span class="comment">//此模式支持热模块替换：热模块替换的好处是只替换更新的部分,而不是页面重载.</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">//其他解决方案配置</span></span><br><span class="line">resolve:&#123; </span><br><span class="line">    extensions:[<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;.js&#x27;</span>,<span class="string">&#x27;.json&#x27;</span>,<span class="string">&#x27;.css&#x27;</span>,<span class="string">&#x27;.scss&#x27;</span>]  </span><br><span class="line">&#125;,</span><br><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [&#123;</span><br><span class="line">    test: <span class="regexp">/\.js$/</span>, <span class="comment">// 正则匹配文件名</span></span><br><span class="line">    exclude: <span class="string">&#x27;/node_modules/&#x27;</span>, <span class="comment">// 排除 </span></span><br><span class="line">    use: [<span class="string">&#x27;babel-loader&#x27;</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">plugins: [ <span class="comment">// 插件</span></span><br><span class="line">    <span class="keyword">new</span> copyWebpackPlugin([&#123;</span><br><span class="line">    <span class="keyword">from</span>: path.resolve(__dirname, <span class="string">&#x27;public/static&#x27;</span>), </span><br><span class="line">    to: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">    ignore: [<span class="string">&#x27;index.html&#x27;</span>]</span><br><span class="line">&#125;])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>有哪些常见的Loader？你用过哪些Loader？</p>
+<ul>
+<li>babel-loader: 语法，源码转换以便能够运行在当前和旧版本的浏览器或其他环境中。</li>
+</ul>
+</li>
+<li><p>有哪些常见的Plugin？你用过哪些Plugin？</p>
+</li>
+</ol>
+<ol start="4">
+<li>那你再说一说Loader和Plugin的区别？</li>
+</ol>
+<ol start="5">
+<li>是否写过Loader和Plugin？描述一下编写loader或plugin的思路？</li>
+</ol>
+<ol start="6">
+<li>webpack的构建流程是什么？</li>
+</ol>
+<ol start="7">
+<li>使用webpack开发时，你用过哪些可以提高效率的插件？</li>
+</ol>
+<ol start="8">
+<li>source map是什么？生产环境怎么用？</li>
+</ol>
+<ol start="9">
+<li> webpack的热更新是如何做到的？说明其原理？</li>
+</ol>
+<ol start="10">
+<li>如何利用webpack来优化前端性能？</li>
+</ol>
+<ol start="11">
+<li>如何优化 Webpack 的构建速度？</li>
+</ol>
+<ol start="12">
+<li>聊一聊Babel原理吧</li>
+</ol>
+<style>
+mycode {
+    color: #ff502c;
+    background-color: #fff5f5;
+}
+</style></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Shen Shen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/03/11/webpack/">http://example.com/2021/03/11/webpack/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">shenshen's study blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7/">打包工具</a><a class="post-meta__tags" href="/tags/webpack/">webpack</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/03/11/Event_Loop/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2021/02/13/13/02/red-lighthouse-6011477_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Event Loop</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Shen Shen</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/webpack/" title="webpack"><img src="https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="webpack"/></a><div class="content"><a class="title" href="/2021/03/11/webpack/" title="webpack">webpack</a><time datetime="2021-03-11T14:52:05.000Z" title="发表于 2021-03-11 22:52:05">2021-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/Event_Loop/" title="Event Loop"><img src="https://cdn.pixabay.com/photo/2021/02/13/13/02/red-lighthouse-6011477_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Event Loop"/></a><div class="content"><a class="title" href="/2021/03/11/Event_Loop/" title="Event Loop">Event Loop</a><time datetime="2021-03-11T01:32:59.000Z" title="发表于 2021-03-11 09:32:59">2021-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/09/%E4%BA%8B%E4%BB%B6/" title="事件"><img src="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="事件"/></a><div class="content"><a class="title" href="/2021/03/09/%E4%BA%8B%E4%BB%B6/" title="事件">事件</a><time datetime="2021-03-09T10:05:06.000Z" title="发表于 2021-03-09 18:05:06">2021-03-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93/" title="浏览器渲染"><img src="https://cdn.pixabay.com/photo/2021/02/06/19/29/pancakes-5989136_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="浏览器渲染"/></a><div class="content"><a class="title" href="/2021/03/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93/" title="浏览器渲染">浏览器渲染</a><time datetime="2021-03-09T02:20:08.000Z" title="发表于 2021-03-09 10:20:08">2021-03-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/08/%E8%B7%A8%E5%9F%9F%E9%80%9A%E4%BF%A1/" title="跨域通信"><img src="https://cdn.pixabay.com/photo/2021/02/08/16/03/dinosaur-5995333_1280.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域通信"/></a><div class="content"><a class="title" href="/2021/03/08/%E8%B7%A8%E5%9F%9F%E9%80%9A%E4%BF%A1/" title="跨域通信">跨域通信</a><time datetime="2021-03-08T10:40:24.000Z" title="发表于 2021-03-08 18:40:24">2021-03-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Shen Shen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
