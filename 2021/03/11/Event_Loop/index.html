@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Event Loop | shenshen's study blog</title><meta name="keywords" content="浏览器,JS,Event Loop"><meta name="author" content="Shen Shen"><meta name="copyright" content="Shen Shen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="进程与线程 涉及面试题：进程与线程区别？JS 单线程带来的好处？   JS 是单线程执行的 讲到线程，那么肯定也得说一下进程。本质上来说，两个名词都是 CPU 工作时间片的一个描述。 进程描述了 CPU 在运行指令及加载和保存上下文所需的时间，放在应用上来说就代表了一个程序。线程是进程中的更小单位，描述了执行一段指令所需的时间   把这些概念拿到浏览器中来说，当你 打开一个 Tab 页时，其实就是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Event Loop">
+<meta property="og:url" content="http://example.com/2021/03/11/Event_Loop/index.html">
+<meta property="og:site_name" content="shenshen&#39;s study blog">
+<meta property="og:description" content="进程与线程 涉及面试题：进程与线程区别？JS 单线程带来的好处？   JS 是单线程执行的 讲到线程，那么肯定也得说一下进程。本质上来说，两个名词都是 CPU 工作时间片的一个描述。 进程描述了 CPU 在运行指令及加载和保存上下文所需的时间，放在应用上来说就代表了一个程序。线程是进程中的更小单位，描述了执行一段指令所需的时间   把这些概念拿到浏览器中来说，当你 打开一个 Tab 页时，其实就是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2021/02/13/13/02/red-lighthouse-6011477_1280.jpg">
+<meta property="article:published_time" content="2021-03-11T01:32:59.000Z">
+<meta property="article:modified_time" content="2021-03-11T03:19:16.161Z">
+<meta property="article:author" content="Shen Shen">
+<meta property="article:tag" content="浏览器">
+<meta property="article:tag" content="JS">
+<meta property="article:tag" content="Event Loop">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2021/02/13/13/02/red-lighthouse-6011477_1280.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/03/11/Event_Loop/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-11 11:19:16'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2021/02/13/13/02/red-lighthouse-6011477_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">shenshen's study blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Event Loop</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-11T01:32:59.000Z" title="发表于 2021-03-11 09:32:59">2021-03-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-11T03:19:16.161Z" title="更新于 2021-03-11 11:19:16">2021-03-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/JS/">JS</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h3><blockquote>
+<p>涉及面试题：进程与线程区别？JS 单线程带来的好处？</p>
+</blockquote>
+<ul>
+<li>JS 是单线程执行的</li>
+<li>讲到线程，那么肯定也得说一下进程。本质上来说，两个名词都是 CPU 工作时间片的一个描述。</li>
+<li>进程描述了 CPU 在运行指令及加载和保存上下文所需的时间，放在应用上来说就代表了一个程序。线程是进程中的更小单位，描述了执行一段指令所需的时间</li>
+</ul>
+<blockquote>
+<p>把这些概念拿到浏览器中来说，当你 <strong>打开一个 Tab 页时，其实就是创建了一个进程</strong>，一个进程中可以有多个线程，比如 <strong>渲染线程、JS 引擎线程、HTTP 请求线程</strong> 等等。当你发起一个请求时，其实就是创建了一个线程，当请求结束后，该线程可能就会被销毁。</p>
+</blockquote>
+<p>上文说到了 JS 引擎线程和渲染线程，大家应该都知道，在 JS 运行的时候可能会阻止 UI 渲染，这说明了两个线程是互斥的。这其中的原因是 <span style="color:coral;font-weight:700;">因为 JS 可以修改 DOM，如果在 JS 执行的时候 UI 线程还在工作，就可能导致不能安全的渲染 UI</span>。这其实也是一个单线程的好处，得益于 JS 是单线程运行的，可以达到节省内存，节约上下文切换时间，没有锁的问题的好处。</p>
+<blockquote>
+<p>问题：为什么 GUI 渲染线程为什么与 JS 引擎线程互斥?</p>
+</blockquote>
+<ul>
+<li>这是由于 JS 是可以操作 DOM 的，如果同时修改元素属性并同时渲染界面(即 JS线程和 UI线程同时运行)那么渲染线程前后获得的元素就可能不一致了</li>
+<li>因此，为了防止渲染出现不可预期的结果，浏览器设定 GUI渲染线程和 JS引擎线程为互斥关系</li>
+<li>当 JS引擎线程执行时，GUI渲染线程会被挂起，GUI更新则会被保存在一个队列中等待 JS 引擎线程空闲时立即被执行</li>
+</ul>
+<p><strong>浏览器进程划分</strong></p>
+<blockquote>
+<p>仅仅打开了 1 个页面，为什么有 4 个进程<br>答：因为打开 1 个页面至少需要 1 个网络进程、1 个浏览器进程、1 个 GPU 进程以及 1 个渲染进程，共 4 个；如果打开的页面有运行插件的话，还需要再加上 1 个插件进程。</p>
+<ol>
+<li>浏览器主进程（一个），浏览器tab切换、回退刷新等操作</li>
+<li>网络进程，负责网络资源加载（一个）</li>
+<li>GPU进程（一个），负责像素点绘制</li>
+<li>渲染进程（一个tab一个），多个tab互不影响</li>
+<li>插件进程（一个插件一个）</li>
+</ol>
+</blockquote>
+<p><strong>渲染进程中包含的线程：</strong></p>
+<ol>
+<li><p>GUI 渲染线程<br> 负责解析 HTML、CSS构建 DOM树 和 render树<br> 时间：重绘、回流时会执行<br> 特点：与JS引擎互斥</p>
+</li>
+<li><p>JS 引擎线程<br> 作用：处理JS脚本程序，编译JS代码，如V8引擎，Chrome和Node.js都在用<br> 起因：<strong>JS语言是一门单线程语言，它的异步和多线程是通过Event Loop事件循环来实现的</strong>，由于是单线程，通过事件循环机制来实现异步任务<br> 特点：与GUI引擎互斥<br> 构成：内存堆（内存分配）、调用栈（代码执行）</p>
+<ul>
+<li>内核<ul>
+<li>渲染引擎</li>
+<li>JS 引擎<ul>
+<li>执行栈</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>事件触发线程<br> 控制事件循环的节奏，当执行栈（js主线程执行完空闲后），从消息队列中取出一个任务放入执行栈中执行，执行栈为空后，再从消息队列中取出一个放入执行栈中执行，维护一个消息队列</p>
+<ul>
+<li>消息队列<ul>
+<li>微任务</li>
+<li>宏任务</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>定时器触发线程<br> setTimeout、setInterval</p>
+</li>
+<li><p>异步（http）请求线程<br> 发送网络请求获取数据</p>
+</li>
+</ol>
+<h3 id="执行栈"><a href="#执行栈" class="headerlink" title="执行栈"></a>执行栈</h3><blockquote>
+<p>涉及面试题：什么是执行栈？<br>可以把执行栈认为是一个存储函数调用的栈结构，遵循先进后出的原则。当我们使用递归的时候，因为栈可存放的函数是有限制的，一旦存放了过多的函数且没有得到释放的话，就会出现爆栈的问题。</p>
+</blockquote>
+<h3 id="从-Event-Loop-看-JS-的运行机制"><a href="#从-Event-Loop-看-JS-的运行机制" class="headerlink" title="从 Event Loop 看 JS 的运行机制"></a>从 Event Loop 看 JS 的运行机制</h3><p>先理解一些概念：</p>
+<ul>
+<li>JS 分为 同步任务 和 异步任务</li>
+<li>同步任务都在JS引擎线程上执行，形成一个 <strong>执行栈</strong></li>
+<li>事件触发线程管理一个 <strong>任务队列</strong>，异步任务触发条件达成，将回调事件放到任务队列中</li>
+<li>执行栈中所有同步任务执行完毕，此时 JS 引擎线程空闲，系统会读取任务队列，将可运行的异步任务回调事件添加到执行栈中，开始执行。</li>
+</ul>
+<p><img src="/2021/03/11/Event_Loop/%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6-1.png" alt="运行机制"></p>
+<ul>
+<li>前端开发中我们会通过 setTimeout/setInterval 来指定定时任务，会通过 XHR/fetch 发送网络请求</li>
+<li>不管是 setTimeout/setInterval 和 XHR/fetch 代码，在这些代码执行时，<strong>本身是同步任务，而其中的回调函数才是异步任务</strong></li>
+<li>当代码执行到 setTimeout/setInterval时，实际上是 JS 引擎线程通知 <strong>定时触发器线程</strong>，间隔一个时间后，会触发一个回调事件</li>
+<li>而<strong>定时触发器线程</strong>在接收到这个消息后，会在等待的时间后，将回调事件放入到由<strong>事件触发线程</strong>所管理的事件队列中</li>
+<li>当代码执行到 XHR/fetch时，实际上是 JS 引擎线程通知<strong>异步http请求线程</strong>，发送一个网络请求，并制定请求完成后的回调事件</li>
+<li>而<strong>异步http请求线程</strong>在接收到这个消息后，会在请求成功后，将回调事件放入到由<strong>事件触发线程</strong>所管理的事件队列中</li>
+<li>当我们的同步任务执行完，<strong>JS引擎线程</strong>会询问<strong>事件触发线程</strong>，在事件队列中是否有待执行的回调函数，如果有就会加入到执行栈中交给 JS 引擎线程执行</li>
+</ul>
+<p><img src="/2021/03/11/Event_Loop/%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6-2.png" alt="运行机制"></p>
+<p><img src="/2021/03/11/Event_Loop/%E4%BE%8B%E5%AD%90-1.png" alt="运行机制例子"></p>
+<blockquote>
+<p>总结一下：</p>
+<ul>
+<li>JS 引擎线程只执行执行栈中的事件</li>
+<li>执行栈中的代码执行完毕，就会读取事件队列中的事件</li>
+<li>事件队列中的回调事件，是由各自线程插入到事件队列中的</li>
+<li>如此循环</li>
+</ul>
+</blockquote>
+<h3 id="宏任务和微任务"><a href="#宏任务和微任务" class="headerlink" title="宏任务和微任务"></a>宏任务和微任务</h3><h4 id="什么是宏任务"><a href="#什么是宏任务" class="headerlink" title="什么是宏任务"></a>什么是宏任务</h4><ul>
+<li>我们可以将每次执行栈执行的代码当做是一个宏任务（包括每次从事件队列中获取一个事件回调并放到执行栈中执行）</li>
+<li>每一个宏任务会从头到尾执行完毕，不会执行其他。</li>
+<li>JS 引擎线程和 GUI渲染线程是互斥的关系，浏览器为了能够使 宏任务 和 DOM任务 有序的进行，会在一个宏任务执行结果后，在下一个宏任务执行前， GUI渲染线程开始工作，对页面进行渲染。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 宏任务--&gt;渲染--&gt;宏任务--&gt;渲染...</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>主代码块，setTimeout，setInterval等，都属于宏任务</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>第一个例子：</strong></p>
+<p>我们可以将这段代码放到浏览器的控制台执行以下，看一下效果：<br><img src="/2021/03/11/Event_Loop/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E4%BE%8B%E5%AD%90-1.png" alt="宏任务例子"><br><img src="/2021/03/11/Event_Loop/%E7%BB%93%E6%9E%9C-1.gif" alt="宏任务例子"></p>
+<blockquote>
+<p>我们会看到的结果是，页面背景会在瞬间变成灰色，以上代码属于同一次宏任务，所以全部执行完才触发页面渲染，渲染时 GUI线程 会将所有UI改动优化合并，所以视觉效果上，只会看到页面变成灰色</p>
+</blockquote>
+<p><strong>第二个例子：</strong><br><img src="/2021/03/11/Event_Loop/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E4%BE%8B%E5%AD%90-2.png" alt="宏任务例子"><br><img src="/2021/03/11/Event_Loop/%E7%BB%93%E6%9E%9C-2.gif" alt="宏任务例子"></p>
+<blockquote>
+<p>我们看到，页面先显示成蓝色背景，然后瞬间变成了黑色背景，这是因为以上代码属于两次宏任务，第一次 宏任务执行的代码是将背景变成蓝色，然后触发渲染，将页面变成蓝色，再触发第二次宏任务将背景变成黑色</p>
+</blockquote>
+<p><strong>宏任务</strong></p>
+<ul>
+<li>script</li>
+<li>setTimeout</li>
+<li>setInterval</li>
+<li>setImmediate</li>
+<li>I/O</li>
+<li>UI rendering</li>
+</ul>
+<h4 id="什么是微任务"><a href="#什么是微任务" class="headerlink" title="什么是微任务"></a>什么是微任务</h4><ul>
+<li>我们已经知道 宏任务 结束后，会执行渲染，然后执行下一个 宏任务</li>
+<li>而 微任务 可以理解成在当前宏任务执行后立即执行的任务</li>
+<li>也就是说，当宏任务执行完，会在渲染前，将执行期间所产生的所有微任务都执行完。</li>
+</ul>
+<blockquote>
+<p>Promise，process.nextTick等，属于微任务。</p>
+</blockquote>
+<p><img src="/2021/03/11/Event_Loop/%E5%BE%AE%E4%BB%BB%E5%8A%A1%E4%BE%8B%E5%AD%90-1.png" alt="微任务例子"><br><img src="/2021/03/11/Event_Loop/%E7%BB%93%E6%9E%9C-3.gif" alt="微任务例子"></p>
+<blockquote>
+<p>控制台输出 1 3 2 , 是因为 promise 对象的 then 方法的回调函数是异步执行，所以 2 最后输出;<br>页面的背景色直接变成黑色，没有经过蓝色的阶段，是因为，我们在宏任务中将背景设置为蓝色，但在进行渲染前执行了微任务，在微任务中将背景变成了黑色，然后才执行的渲染</p>
+</blockquote>
+<p><img src="/2021/03/11/Event_Loop/%E5%BE%AE%E4%BB%BB%E5%8A%A1%E4%BE%8B%E5%AD%90-2.png" alt="微任务例子"></p>
+<blockquote>
+<p>上面代码共包含两个 setTimeout ，也就是说除主代码块外，共有两个宏任务， 其中第一个宏任务执行中，输出 1 ，并且创建了微任务队列，所以在下一个宏任务队列执行前，先执行微任务，在微任务执行中，输出 3 ，微任务执行后，执行下一次宏任务，执行中输出 2</p>
+</blockquote>
+<p><strong>微任务</strong></p>
+<ul>
+<li>process.nextTick</li>
+<li>promise</li>
+<li>ajax</li>
+<li>Object.observe(该方法已废弃)</li>
+<li>MutationObserver</li>
+</ul>
+<h4 id="一次正确的-Event-loop-顺序"><a href="#一次正确的-Event-loop-顺序" class="headerlink" title="一次正确的 Event loop 顺序"></a>一次正确的 Event loop 顺序</h4><ul>
+<li>执行同步代码，这属于宏任务</li>
+<li>执行栈为空，查询是否有微任务需要执行</li>
+<li>执行所有微任务</li>
+<li>必要的话渲染 UI</li>
+<li>然后开始下一轮 Event loop，执行宏任务中的异步代码</li>
+<li>或下面</li>
+<li>执行一个宏任务（栈中没有就从事件队列中获取）</li>
+<li>执行过程中如果遇到微任务，就将它添加到微任务的任务队列中</li>
+<li>宏任务执行完毕后，立即执行当前微任务队列中的所有微任务（依次执行）</li>
+<li>当前宏任务执行完毕，开始检查渲染，然后GUI线程接管渲染</li>
+<li>渲染完毕后，JS线程继续接管，开始下一个宏任务（从事件队列中获取）</li>
+</ul>
+<blockquote>
+<p>通过上述的 Event loop 顺序可知，如果宏任务中的异步代码有大量的计算并且需要操作 DOM 的话，<strong>为了更快的响应界面响应，我们可以把操作 DOM 放入微任务中</strong></p>
+</blockquote>
+<blockquote>
+<p>涉及面试题：异步代码执行顺序？解释一下什么是 Event Loop ？谈谈对Event Loop 的理解</p>
+</blockquote>
+<blockquote>
+<p>首先，js是单线程的，<strong>主要的任务是处理用户的交互</strong>，而用户的交互无非就是响应 DOM 的增删改，使用事件队列的形式，一次事件循环只处理一个事件响应，使得脚本执行相对连续，所以有了事件队列，用来储存待执行的事件，那么事件队列的事件从哪里被push进来的呢。那就是另外一个线程叫<strong>事件触发线程</strong>做的事情了，他的作用主要是在<strong>定时触发器线程</strong>、<strong>异步HTTP请求线程</strong>满足特定条件下的回调函数push到事件队列中，等待js引擎空闲的时候去执行，当然js引擎执行过程中有优先级之分，首先js引擎在一次事件循环中，会先执行js线程的主任务，然后会去查找是否有微任务microtask（promise），如果有那就优先执行微任务，如果没有，在去查找宏任务macrotask（setTimeout、setInterval）进行执行</p>
+<p>众所周知 JS 是门<strong>非阻塞单线程语言</strong>，因为在最初 JS 就是为了和浏览器交互而诞生的。如果 JS 是门多线程的语言话，我们在多个线程中处理 DOM 就可能会发生问题（一个线程中新加节点，另一个线程中删除节点）</p>
+<p>JS 在执行的过程中会产生执行环境，<strong>这些执行环境会被顺序的加入到执行栈中</strong>。如果遇到异步的代码，会被挂起并加入到 Task（有多种 task） 队列中。一旦执行栈为空，Event Loop 就会从 Task 队列中拿出需要执行的代码并放入执行栈中执行，所以<strong>本质上来说 JS 中的异步还是同步行为</strong></p>
+<p>不同的任务源会被分配到不同的 Task 队列中，任务源可以分为 微任务（microtask） 和 宏任务（macrotask）。在 ES6 规范中，microtask 称为 jobs，macrotask 称为 task</p>
+</blockquote>
+<p><img src="/2021/03/11/Event_Loop/event_loop.png" alt="event_loop"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;script start&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;setTimeout&#x27;</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Promise&#x27;</span>)</span><br><span class="line">    resolve()</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;promise1&#x27;</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;promise2&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;script end&#x27;</span>);</span><br><span class="line"><span class="comment">// script start =&gt; Promise =&gt; script end =&gt; promise1 =&gt; promise2 =&gt; setTimeout</span></span><br><span class="line"><span class="comment">// 以上代码虽然 setTimeout 写在 Promise 之前，但是因为 Promise 属于微任务而 setTimeout 属于宏任务</span></span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Shen Shen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/03/11/Event_Loop/">http://example.com/2021/03/11/Event_Loop/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">shenshen's study blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a><a class="post-meta__tags" href="/tags/JS/">JS</a><a class="post-meta__tags" href="/tags/Event-Loop/">Event Loop</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2021/02/13/13/02/red-lighthouse-6011477_1280.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/03/09/%E4%BA%8B%E4%BB%B6/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">事件</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/03/09/事件/" title="事件"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-09</div><div class="title">事件</div></div></a></div><div><a href="/2021/03/06/常见的WEB攻击分类/" title="常见的WEB攻击分类"><img class="cover" src="https://cdn.pixabay.com/photo/2020/08/17/18/38/cat-5496162_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-06</div><div class="title">常见的WEB攻击分类</div></div></a></div><div><a href="/2021/03/08/跨域通信/" title="跨域通信"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/08/16/03/dinosaur-5995333_1280.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-08</div><div class="title">跨域通信</div></div></a></div><div><a href="/2021/03/09/浏览器渲染/" title="浏览器渲染"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/06/19/29/pancakes-5989136_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-09</div><div class="title">浏览器渲染</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">进程与线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%A0%88"><span class="toc-number">2.</span> <span class="toc-text">执行栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E-Event-Loop-%E7%9C%8B-JS-%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">从 Event Loop 看 JS 的运行机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.</span> <span class="toc-text">宏任务和微任务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%8F%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.1.</span> <span class="toc-text">什么是宏任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BE%AE%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.2.</span> <span class="toc-text">什么是微任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E6%AC%A1%E6%AD%A3%E7%A1%AE%E7%9A%84-Event-loop-%E9%A1%BA%E5%BA%8F"><span class="toc-number">4.3.</span> <span class="toc-text">一次正确的 Event loop 顺序</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Shen Shen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
