@@ -5,14 +5,14 @@
 <meta property="og:site_name" content="shenshen&#39;s study blog">
 <meta property="og:description" content="webpack 是什么？谈谈你对 webpack 的理解。  本质上，webpack 是一个现代 JavaScript 应用程序的静态模块打包器(module bundler)，可以使用它管理项目中的模块依赖。 将项目当作一个整体，通过一个给定的的主文件，webpack 将从这个文件开始找到你的项目的所有依赖文件，使用 loaders 处理它们，最后打包成一个或多个浏览器可识别的 js 文件。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2021/02/13/21/43/field-6012856_1280.jpg">
 <meta property="article:published_time" content="2021-03-11T14:52:05.000Z">
-<meta property="article:modified_time" content="2021-03-11T15:31:03.811Z">
+<meta property="article:modified_time" content="2021-03-12T03:13:51.120Z">
 <meta property="article:author" content="Shen Shen">
 <meta property="article:tag" content="打包工具">
 <meta property="article:tag" content="webpack">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/03/11/webpack/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2021/02/13/21/43/field-6012856_1280.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/03/11/webpack/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
   root: '/',
   algolia: undefined,
   localSearch: undefined,
@@ -58,7 +58,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2021-03-11 23:31:03'
+  postUpdate: '2021-03-12 11:13:51'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -140,8 +140,8 @@
           document.documentElement.classList.remove('hide-aside')
         }
       }
-    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">shenshen's study blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">webpack</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-11T14:52:05.000Z" title="发表于 2021-03-11 22:52:05">2021-03-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-11T15:31:03.811Z" title="更新于 2021-03-11 23:31:03">2021-03-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/webpack/">webpack</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">969</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><ol>
-<li><p><mycode>webpack</mycode> 是什么？谈谈你对 webpack 的理解。</p>
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2021/02/13/21/43/field-6012856_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">shenshen's study blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">webpack</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-11T14:52:05.000Z" title="发表于 2021-03-11 22:52:05">2021-03-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-12T03:13:51.120Z" title="更新于 2021-03-12 11:13:51">2021-03-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/webpack/">webpack</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>14分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><ol>
+<li><p><strong><mycode>webpack</mycode> 是什么？谈谈你对 webpack 的理解。</strong></p>
 <ul>
 <li>本质上，<mycode>webpack</mycode> 是一个现代 <mycode>JavaScript</mycode> 应用程序的静态模块打包器(<mycode>module bundler</mycode>)，可以使用它管理项目中的模块依赖。</li>
 <li>将项目当作一个整体，通过一个给定的的主文件，<mycode>webpack</mycode> 将从这个文件开始找到你的项目的所有依赖文件，使用 <mycode>loaders</mycode> 处理它们，最后打包成一个或多个浏览器可识别的 <mycode>js</mycode> 文件。</li>
@@ -176,47 +176,199 @@
 <li>模式( <mycode>mode</mycode> )<br>通过选择 <mycode>development</mycode> 或 <mycode>production</mycode> 之中的一个，来设置 <mycode>mode</mycode> 参数，你可以启用相应模式下的 <mycode>webpack</mycode> 内置的优化。</li>
 </ul>
  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 多个入口</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">mode: <span class="string">&#x27;production&#x27;</span>,</span><br><span class="line">entry: &#123;</span><br><span class="line">    index: [<span class="string">&quot;./src/index.js&quot;</span>],</span><br><span class="line">    main: [<span class="string">&quot;./src/main.js&quot;</span>]</span><br><span class="line">&#125;,</span><br><span class="line">output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">    filename: <span class="string">&#x27;js/[name].[hash:8].js&#x27;</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">//配置服务</span></span><br><span class="line">devServer:&#123;</span><br><span class="line">    port: <span class="number">3000</span>, <span class="comment">// 更换端口</span></span><br><span class="line">    hot:<span class="literal">true</span>, <span class="comment">//启用热模块替换</span></span><br><span class="line">    inline:<span class="literal">true</span> </span><br><span class="line">    <span class="comment">//此模式支持热模块替换：热模块替换的好处是只替换更新的部分,而不是页面重载.</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">//其他解决方案配置</span></span><br><span class="line">resolve:&#123; </span><br><span class="line">    extensions:[<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;.js&#x27;</span>,<span class="string">&#x27;.json&#x27;</span>,<span class="string">&#x27;.css&#x27;</span>,<span class="string">&#x27;.scss&#x27;</span>]  </span><br><span class="line">&#125;,</span><br><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [&#123;</span><br><span class="line">    test: <span class="regexp">/\.js$/</span>, <span class="comment">// 正则匹配文件名</span></span><br><span class="line">    exclude: <span class="string">&#x27;/node_modules/&#x27;</span>, <span class="comment">// 排除 </span></span><br><span class="line">    use: [<span class="string">&#x27;babel-loader&#x27;</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">plugins: [ <span class="comment">// 插件</span></span><br><span class="line">    <span class="keyword">new</span> copyWebpackPlugin([&#123;</span><br><span class="line">    <span class="keyword">from</span>: path.resolve(__dirname, <span class="string">&#x27;public/static&#x27;</span>), </span><br><span class="line">    to: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">    ignore: [<span class="string">&#x27;index.html&#x27;</span>]</span><br><span class="line">&#125;])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>有哪些常见的Loader？你用过哪些Loader？</p>
+<li><p><strong>有哪些常见的Loader？你用过哪些Loader？</strong></p>
 <ul>
 <li>babel-loader: 语法，源码转换以便能够运行在当前和旧版本的浏览器或其他环境中。</li>
+<li>image-loader：加载并且压缩图片文件</li>
+<li>css-loader：加载 CSS，支持模块化、压缩、文件导入等特性</li>
+<li>style-loader：把 CSS 代码注入到 JavaScript 中，通过 DOM 操作去加载 CSS</li>
+<li>json-loader: 加载 JSON 文件（默认包含）</li>
+<li>eslint-loader：通过 ESLint 检查 JavaScript 代码</li>
+<li>vue-loader: 加载 Vue单文件组件</li>
+<li>file-loader：可以解析js中require的文件，把文件输出到一个文件夹中，在代码中通过相对 URL 去引用输出的文件 (处理图片和字体)</li>
+<li>url-loader：与 file-loader 类似，区别是用户可以设置一个阈值，大于阈值会交给 file-loader 处理，小于阈值时返回文件 base64 形式编码 (处理图片和字体)</li>
 </ul>
 </li>
-<li><p>有哪些常见的Plugin？你用过哪些Plugin？</p>
+<li><p><strong>有哪些常见的Plugin？你用过哪些Plugin？</strong></p>
+<ul>
+<li>hot-module-replacement: 模块热更新</li>
+<li>uglifyjs-webpack-plugin：通过UglifyES压缩ES6代码</li>
+<li>webpack-bundle-analyzer: 可视化 Webpack 输出文件的体积 (业务组件、依赖第三方模块)</li>
+</ul>
+</li>
+<li><p><strong>那你再说一说Loader和Plugin的区别？</strong></p>
+<ul>
+<li>Loader 本质就是一个函数，在该函数中对接收到的内容进行转换，返回转换后的结果。 因为 Webpack 只认识 JavaScript，所以 Loader 就成了翻译官，对其他类型的资源进行转译的预处理工作。（Loader的作用是让webpack拥有了加载和解析非JavaScript文件的能力。）</li>
+<li>Plugin 就是插件，插件可以扩展 Webpack 的功能，在 Webpack 运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。</li>
+</ul>
+<p> <strong>不同的用法：</strong></p>
+<ul>
+<li>Loader 在 module.rules 中配置，作为模块的解析规则，类型为数组。每一项都是一个 Object，内部包含了 test(类型文件)、loader、options (参数)等属性。</li>
+<li>Plugin 在 plugins 中单独配置，类型为数组，每一项是一个 Plugin 的实例，参数都通过构造函数传入。</li>
+</ul>
+</li>
+<li><p><strong>是否写过Loader和Plugin？描述一下编写loader或plugin的思路？</strong></p>
+<ul>
+<li>Loader 支持链式调用，所以开发上需要严格遵循“单一职责”，每个 Loader 只负责自己需要负责的事情。</li>
+<li>webpack在运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在特定的阶段钩入想要添加的自定义功能。Webpack 的 Tapable 事件流机制保证了插件的有序性，使得整个系统扩展性良好。</li>
+</ul>
+</li>
+<li><p><strong>webpack的构建流程是什么？</strong><br> Webpack 的运行流程是一个串行的过程，从启动到结束会依次执行以下流程：</p>
+<ol>
+<li>初始化参数：从配置文件和 Shell 语句中读取与合并参数，得出最终的参数</li>
+<li>开始编译：用上一步得到的参数初始化 Compiler 对象，加载所有配置的插件，执行对象的 run 方法开始执行编译</li>
+<li>确定入口：根据配置中的 entry 找出所有的入口文件</li>
+<li>编译模块：从入口文件出发，调用所有配置的 Loader 对模块进行翻译，再找出该模块依赖的模块，再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理</li>
+<li>完成模块编译：在经过第4步使用 Loader 翻译完所有模块后，得到了每个模块被翻译后的最终内容以及它们之间的依赖关系</li>
+<li>输出资源：根据入口和模块之间的依赖关系，组装成一个个包含多个模块的 Chunk，再把每个 Chunk 转换成一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会</li>
+<li>输出完成：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统</li>
+</ol>
+<p> <strong>简单说</strong></p>
+<ul>
+<li><strong>初始化</strong>：启动构建，读取与合并配置参数，加载 Plugin，实例化 Compiler</li>
+<li><strong>编译</strong>：从 Entry 出发，针对每个 Module 串行调用对应的 Loader 去翻译文件的内容，再找到该 Module 依赖的 Module，递归地进行编译处理</li>
+<li><strong>输出</strong>：将编译后的 Module 组合成 Chunk，将 Chunk 转换成文件，输出到文件系统中</li>
+</ul>
 </li>
 </ol>
-<ol start="4">
-<li>那你再说一说Loader和Plugin的区别？</li>
-</ol>
-<ol start="5">
-<li>是否写过Loader和Plugin？描述一下编写loader或plugin的思路？</li>
-</ol>
-<ol start="6">
-<li>webpack的构建流程是什么？</li>
-</ol>
 <ol start="7">
-<li>使用webpack开发时，你用过哪些可以提高效率的插件？</li>
+<li><strong>Webpack的基本功能有哪些？</strong><ol>
+<li>代码转换：TypeScript 编译成 JavaScript、SCSS 编译成 CSS 等等</li>
+<li>文件优化：压缩 JavaScript、CSS、HTML 代码，压缩合并图片等</li>
+<li>代码分割：提取多个页面的公共代码、提取首屏不需要执行部分的代码让其异步加载</li>
+<li>模块合并：在采用模块化的项目有很多模块和文件，需要构建功能把模块分类合并成一个文件</li>
+<li>自动刷新：监听本地源代码的变化，自动构建，刷新浏览器</li>
+<li>代码校验：在代码被提交到仓库前需要检测代码是否符合规范，以及单元测试是否通过</li>
+<li>自动发布：更新完代码后，自动构建出线上发布代码并传输给发布系统。</li>
+</ol>
+</li>
 </ol>
 <ol start="8">
-<li>source map是什么？生产环境怎么用？</li>
+<li><strong>source map是什么？生产环境怎么用？</strong><br> source map 是将编译、打包、压缩后的代码映射回源代码的过程。打包压缩后的代码不具备良好的可读性，想要调试源码就需要 soucre map。<br> map文件只要不打开开发者工具，浏览器是不会加载的。<br> 线上环境一般有三种处理方案：<ul>
+<li>hidden-source-map：借助第三方错误监控平台 Sentry 使用</li>
+<li>nosources-source-map：只会显示具体行数以及查看源代码的错误栈。安全性比 sourcemap 高</li>
+<li>sourcemap：通过 nginx 设置将 .map 文件只对白名单开放(公司内网)</li>
+</ul>
+</li>
 </ol>
 <ol start="9">
-<li> webpack的热更新是如何做到的？说明其原理？</li>
-</ol>
-<ol start="10">
-<li>如何利用webpack来优化前端性能？</li>
+<li><p><strong>webpack的热更新是如何做到的？说明其原理？(重要)</strong><br> Webpack 的热更新又称热替换（Hot Module Replacement），缩写为 HMR。 这个机制可以做到不用刷新浏览器而将新变更的模块替换掉旧的模块。<br> HMR的核心就是客户端从服务端拉去更新后的文件，准确的说是 chunk diff (chunk 需要更新的部分)，实际上服务端与浏览器之间维护了一个 Websocket，当本地资源发生变化时，服务端会向浏览器推送更新，并带上构建时的 hash，让客户端与上一次资源进行对比。客户端对比出差异后会向服务端发起 Ajax 请求来获取更改内容(文件列表、hash)，这样客户端就可以再借助这些信息继续向服务端发起 jsonp 请求获取该chunk的增量更新。</p>
+<p> 后续的部分(拿到增量更新之后如何处理？哪些状态该保留？哪些又需要更新？)由 HotModulePlugin 来完成，提供了相关 API 以供开发者针对自身场景进行处理，像react-hot-loader 和 vue-loader 都是借助这些 API 实现 HMR。</p>
+</li>
+<li><p><strong>如何优化 Webpack 的构建速度？（重要）</strong></p>
+<ul>
+<li>多进程/多实例构建：HappyPack(不维护了)、thread-loader</li>
+<li>压缩代码<ul>
+<li>多进程并行压缩       <ul>
+<li>webpack-paralle-uglify-plugin</li>
+<li>uglifyjs-webpack-plugin 开启 parallel 参数 (不支持ES6)</li>
+<li>terser-webpack-plugin 开启 parallel 参数(支持ES6)</li>
+</ul>
+</li>
+<li>通过 mini-css-extract-plugin 提取 Chunk 中的 CSS 代码到单独文件，通过 css-loader 的 minimize 选项开启 cssnano 压缩 CSS。</li>
+</ul>
+</li>
+<li>图片压缩<ul>
+<li>使用基于 Node 库的 imagemin (很多定制选项、可以处理多种图片格式)</li>
+<li>配置 image-webpack-loader</li>
+</ul>
+</li>
+<li>提取页面公共资源：<ul>
+<li>基础包分离：<ul>
+<li>使用 html-webpack-externals-plugin，将基础包通过 CDN 引入，不打入 bundle 中</li>
+<li>使用 SplitChunksPlugin 进行(公共脚本、基础包、页面公共文件)分离(Webpack4内置) ，替代了 CommonsChunkPlugin 插件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>充分利用缓存提升二次构建速度：<ul>
+<li>babel-loader 开启缓存</li>
+<li>terser-webpack-plugin 开启缓存</li>
+<li>使用 cache-loader 或者 hard-source-webpack-plugin</li>
+</ul>
+</li>
+<li>缩小打包作用域：<ul>
+<li>exclude/include (确定 loader 规则范围)</li>
+<li>resolve.modules 指明第三方模块的绝对路径 (减少不必要的查找)</li>
+<li>resolve.mainFields 只采用 main 字段作为入口文件描述字段 (减少搜索步骤，需要考虑到所有运行时依赖的第三方模块的入口文件描述字段)</li>
+<li>resolve.extensions 尽可能减少后缀尝试的可能性</li>
+<li>noParse 对完全不需要解析的库进行忽略 (不去解析但仍会打包到 bundle 中，注意被忽略掉的文件里不应该包含 import、require、define 等模块化语句)</li>
+<li>IgnorePlugin (完全排除模块)</li>
+<li>合理使用alias</li>
+</ul>
+</li>
+<li>Tree shaking<ul>
+<li>打包过程中检测工程中没有引用过的模块并进行标记，在资源压缩时将它们从最终的bundle中去掉(只能对ES6 Modlue生效) 开发中尽可能使用ES6 Module的模块，提高tree shaking效率</li>
+<li>禁用 babel-loader 的模块依赖解析，否则 Webpack 接收到的就都是转换过的 CommonJS 形式的模块，无法进行 tree-shaking</li>
+<li>使用 PurifyCSS(不在维护) 或者 uncss 去除无用 CSS 代码- <ul>
+<li>purgecss-webpack-plugin 和 mini-css-extract-plugin配合使用(建议)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Scope hoisting<ul>
+<li>构建后的代码会存在大量闭包，造成体积增大，运行代码时创建的函数作用域变多，内存开销变大。Scope hoisting 将所有模块的代码按照引用顺序放在一个函数作用域里，然后适当的重命名一些变量以防止变量名冲突</li>
+<li>必须是ES6的语法，因为有很多第三方库仍采用 CommonJS 语法，为了充分发挥 Scope hoisting 的作用，需要配置 mainFields 对第三方模块优先采用 jsnext:main 中指向的ES6模块化语法</li>
+</ul>
+</li>
+<li>DLL：<ul>
+<li>使用 DllPlugin 进行分包，使用 DllReferencePlugin(索引链接) 对 manifest.json 引用，让一些基本不会改动的代码先打包成静态资源，避免反复编译浪费时间。</li>
+<li>HashedModuleIdsPlugin 可以解决模块数字id问题</li>
+</ul>
+</li>
+</ul>
+</li>
 </ol>
 <ol start="11">
-<li>如何优化 Webpack 的构建速度？</li>
-</ol>
-<ol start="12">
-<li>聊一聊Babel原理吧</li>
+<li><p><strong>聊一聊Babel原理吧</strong><br>大多数JavaScript Parser遵循 estree 规范，Babel 最初基于 acorn 项目(轻量级现代 JavaScript 解析器) Babel大概分为三大部分：</p>
+<ul>
+<li>解析：将代码转换成 AST<ul>
+<li>词法分析：将代码(字符串)分割为token流，即语法单元组成的数组</li>
+<li>语法分析：分析token流(上面生成的数组)并生成 AST</li>
+</ul>
+</li>
+<li>转换：访问 AST 的节点进行变换操作生产新的 AST<ul>
+<li>Taro就是利用 babel 完成的小程序语法转换</li>
+</ul>
+</li>
+<li>生成：以新的 AST 为基础生成代码</li>
+</ul>
+</li>
+<li><p><strong>如何在vue项目中实现按需加载？</strong><br>Vue UI组件库的按需加载 为了快速开发前端项目，经常会引入现成的UI组件库如ElementUI、iView等，但是他们的体积和他们所提供的功能一样，是很庞大的。 而通常情况下，我们仅仅需要少量的几个组件就足够了，但是我们却将庞大的组件库打包到我们的源码中，造成了不必要的开销。</p>
+<p>不过很多组件库已经提供了现成的解决方案，如Element出品的babel-plugin-component和AntDesign出品的babel-plugin-import 安装以上插件后，在.babelrc配置中或babel-loader的参数中进行设置，即可实现组件按需加载了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;presets&quot;</span>: [[<span class="string">&quot;es2015&quot;</span>, &#123; <span class="string">&quot;modules&quot;</span>: <span class="literal">false</span> &#125;]],</span><br><span class="line">    <span class="string">&quot;plugins&quot;</span>: [</span><br><span class="line">        [</span><br><span class="line">            <span class="string">&quot;component&quot;</span>,</span><br><span class="line">            &#123;</span><br><span class="line">            <span class="string">&quot;libraryName&quot;</span>: <span class="string">&quot;element-ui&quot;</span>,</span><br><span class="line">            <span class="string">&quot;styleLibraryName&quot;</span>: <span class="string">&quot;theme-chalk&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>单页应用的按需加载</strong> 现在很多前端项目都是通过单页应用的方式开发的，但是随着业务的不断扩展，会面临一个严峻的问题——首次加载的代码量会越来越多，影响用户的体验。<br>通过import()语句来控制加载时机，webpack内置了对于import()的解析，会将import()中引入的模块作为一个新的入口在生成一个chunk。 当代码执行到import()语句时，会去加载Chunk对应生成的文件。import()会返回一个Promise对象，所以为了让浏览器支持，需要事先注入Promise polyfill</p>
+</li>
+<li><p><strong>在实际工程中，配置文件上百行乃是常事，如何保证各个loader按照预想方式工作？</strong><br>可以使用 enforce 强制执行 loader 的作用顺序，pre 代表在所有正常 loader 之前执行，post 是所有 loader 之后执行。</p>
+</li>
+<li><p><strong>代码分割的本质是什么？有什么意义呢？</strong><br>代码分割的本质其实就是在源代码直接上线和打包成唯一脚本main.bundle.js这两种极端方案之间的一种更适合实际场景的中间状态。<br>「用可接受的服务器性能压力增加来换取更好的用户体验。」</p>
+<ul>
+<li>源代码直接上线：虽然过程可控，但是http请求多，性能开销大。</li>
+<li>打包成唯一脚本：服务器压力小，但是页面空白期长，用户体验不好。</li>
+</ul>
+</li>
+<li><p><strong>文件监听原理呢？</strong><br>在发现源码发生变化时，自动重新构建出新的输出文件。<br>Webpack开启监听模式，有两种方式：</p>
+<ul>
+<li>启动 webpack 命令时，带上 –watch 参数</li>
+<li>在配置 webpack.config.js 中设置 watch:true</li>
+</ul>
+<p>缺点：每次需要手动刷新浏览器<br>原理：<strong>轮询判断文件的最后编辑时间是否变化</strong>，如果某个文件发生了变化，并不会立刻告诉监听者，而是先缓存起来，等 aggregateTimeout 后再执行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.export = &#123;    </span><br><span class="line">    <span class="comment">// 默认false,也就是不开启    </span></span><br><span class="line">    watch: <span class="literal">true</span>,    </span><br><span class="line">    <span class="comment">// 只有开启监听模式时，watchOptions才有意义 </span></span><br><span class="line">    watchOptions: &#123;        </span><br><span class="line">        <span class="comment">// 默认为空，不监听的文件或者文件夹，支持正则匹配        </span></span><br><span class="line">        ignored: <span class="regexp">/node_modules/</span>,        </span><br><span class="line">        <span class="comment">// 监听到变化发生后会等300ms再去执行，默认300ms        </span></span><br><span class="line">        aggregateTimeout:<span class="number">300</span>,        </span><br><span class="line">        <span class="comment">// 判断文件是否发生变化是通过不停询问系统指定文件有没有变化实现的，默认每秒问1000次        </span></span><br><span class="line">        poll:<span class="number">1000</span>    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>文件指纹是什么？怎么用？</strong><br>文件指纹是打包后输出的文件名的后缀。</p>
+<ul>
+<li>Hash：和整个项目的构建相关，只要项目文件有修改，整个项目构建的 hash 值就会更改</li>
+<li>Chunkhash：和 Webpack 打包的 chunk 有关，不同的 entry 会生出不同的 chunkhash</li>
+<li>Contenthash：根据文件内容来定义 hash，文件内容不变，则 contenthash 不变</li>
+</ul>
+</li>
 </ol>
 <style>
 mycode {
     color: #ff502c;
     background-color: #fff5f5;
 }
-</style></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Shen Shen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/03/11/webpack/">http://example.com/2021/03/11/webpack/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">shenshen's study blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7/">打包工具</a><a class="post-meta__tags" href="/tags/webpack/">webpack</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/03/11/Event_Loop/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2021/02/13/13/02/red-lighthouse-6011477_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Event Loop</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Shen Shen</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/webpack/" title="webpack"><img src="https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="webpack"/></a><div class="content"><a class="title" href="/2021/03/11/webpack/" title="webpack">webpack</a><time datetime="2021-03-11T14:52:05.000Z" title="发表于 2021-03-11 22:52:05">2021-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/Event_Loop/" title="Event Loop"><img src="https://cdn.pixabay.com/photo/2021/02/13/13/02/red-lighthouse-6011477_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Event Loop"/></a><div class="content"><a class="title" href="/2021/03/11/Event_Loop/" title="Event Loop">Event Loop</a><time datetime="2021-03-11T01:32:59.000Z" title="发表于 2021-03-11 09:32:59">2021-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/09/%E4%BA%8B%E4%BB%B6/" title="事件"><img src="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="事件"/></a><div class="content"><a class="title" href="/2021/03/09/%E4%BA%8B%E4%BB%B6/" title="事件">事件</a><time datetime="2021-03-09T10:05:06.000Z" title="发表于 2021-03-09 18:05:06">2021-03-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93/" title="浏览器渲染"><img src="https://cdn.pixabay.com/photo/2021/02/06/19/29/pancakes-5989136_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="浏览器渲染"/></a><div class="content"><a class="title" href="/2021/03/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93/" title="浏览器渲染">浏览器渲染</a><time datetime="2021-03-09T02:20:08.000Z" title="发表于 2021-03-09 10:20:08">2021-03-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/08/%E8%B7%A8%E5%9F%9F%E9%80%9A%E4%BF%A1/" title="跨域通信"><img src="https://cdn.pixabay.com/photo/2021/02/08/16/03/dinosaur-5995333_1280.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域通信"/></a><div class="content"><a class="title" href="/2021/03/08/%E8%B7%A8%E5%9F%9F%E9%80%9A%E4%BF%A1/" title="跨域通信">跨域通信</a><time datetime="2021-03-08T10:40:24.000Z" title="发表于 2021-03-08 18:40:24">2021-03-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Shen Shen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+</style></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Shen Shen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/03/11/webpack/">http://example.com/2021/03/11/webpack/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">shenshen's study blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7/">打包工具</a><a class="post-meta__tags" href="/tags/webpack/">webpack</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2021/02/13/21/43/field-6012856_1280.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/03/11/Event_Loop/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2021/02/13/13/02/red-lighthouse-6011477_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Event Loop</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Shen Shen</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/webpack/" title="webpack"><img src="https://cdn.pixabay.com/photo/2021/02/13/21/43/field-6012856_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="webpack"/></a><div class="content"><a class="title" href="/2021/03/11/webpack/" title="webpack">webpack</a><time datetime="2021-03-11T14:52:05.000Z" title="发表于 2021-03-11 22:52:05">2021-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/Event_Loop/" title="Event Loop"><img src="https://cdn.pixabay.com/photo/2021/02/13/13/02/red-lighthouse-6011477_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Event Loop"/></a><div class="content"><a class="title" href="/2021/03/11/Event_Loop/" title="Event Loop">Event Loop</a><time datetime="2021-03-11T01:32:59.000Z" title="发表于 2021-03-11 09:32:59">2021-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/09/%E4%BA%8B%E4%BB%B6/" title="事件"><img src="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="事件"/></a><div class="content"><a class="title" href="/2021/03/09/%E4%BA%8B%E4%BB%B6/" title="事件">事件</a><time datetime="2021-03-09T10:05:06.000Z" title="发表于 2021-03-09 18:05:06">2021-03-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93/" title="浏览器渲染"><img src="https://cdn.pixabay.com/photo/2021/02/06/19/29/pancakes-5989136_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="浏览器渲染"/></a><div class="content"><a class="title" href="/2021/03/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93/" title="浏览器渲染">浏览器渲染</a><time datetime="2021-03-09T02:20:08.000Z" title="发表于 2021-03-09 10:20:08">2021-03-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/08/%E8%B7%A8%E5%9F%9F%E9%80%9A%E4%BF%A1/" title="跨域通信"><img src="https://cdn.pixabay.com/photo/2021/02/08/16/03/dinosaur-5995333_1280.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域通信"/></a><div class="content"><a class="title" href="/2021/03/08/%E8%B7%A8%E5%9F%9F%E9%80%9A%E4%BF%A1/" title="跨域通信">跨域通信</a><time datetime="2021-03-08T10:40:24.000Z" title="发表于 2021-03-08 18:40:24">2021-03-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Shen Shen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
 POWERMODE.shake = true;
 POWERMODE.mobile = false;
 document.body.addEventListener('input', POWERMODE);
