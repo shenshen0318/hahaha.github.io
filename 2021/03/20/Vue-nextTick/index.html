@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vue.nextTick | shenshen's study blog</title><meta name="keywords" content="vue"><meta name="author" content="Shen Shen"><meta name="copyright" content="Shen Shen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="尽管 MVVM 框架并不推荐访问 DOM，但有时候确实会有这样的需求，尤其是和第三方插件进行配合的时候，免不了要进行 DOM 操作。而 nextTick 就提供了一个桥梁，确保我们操作的是更新后的 DOM。 理解 MutationObserver检索一下自己的前端知识库，能监听到 DOM 改动的 API 好像只有 MutationObserver 了，后面简称 MO。 MutationObserv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.nextTick">
+<meta property="og:url" content="http://example.com/2021/03/20/Vue-nextTick/index.html">
+<meta property="og:site_name" content="shenshen&#39;s study blog">
+<meta property="og:description" content="尽管 MVVM 框架并不推荐访问 DOM，但有时候确实会有这样的需求，尤其是和第三方插件进行配合的时候，免不了要进行 DOM 操作。而 nextTick 就提供了一个桥梁，确保我们操作的是更新后的 DOM。 理解 MutationObserver检索一下自己的前端知识库，能监听到 DOM 改动的 API 好像只有 MutationObserver 了，后面简称 MO。 MutationObserv">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg">
+<meta property="article:published_time" content="2021-03-20T01:48:54.000Z">
+<meta property="article:modified_time" content="2021-03-20T02:40:02.509Z">
+<meta property="article:author" content="Shen Shen">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/03/20/Vue-nextTick/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-20 10:40:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">shenshen's study blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Vue.nextTick</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-20T01:48:54.000Z" title="发表于 2021-03-20 09:48:54">2021-03-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-20T02:40:02.509Z" title="更新于 2021-03-20 10:40:02">2021-03-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/vue/">vue</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>尽管 <mycode>MVVM</mycode> 框架并不推荐访问 <mycode>DOM</mycode>，但有时候确实会有这样的需求，尤其是和第三方插件进行配合的时候，免不了要进行 <mycode>DOM</mycode> 操作。而 <mycode>nextTick</mycode> 就提供了一个桥梁，确保我们操作的是更新后的 <mycode>DOM</mycode>。</p>
+<h4 id="理解-MutationObserver"><a href="#理解-MutationObserver" class="headerlink" title="理解 MutationObserver"></a>理解 MutationObserver</h4><p>检索一下自己的前端知识库，能监听到 DOM 改动的 API 好像只有 <mycode>MutationObserver</mycode> 了，后面简称 MO。 <mycode>MutationObserver</mycode> 是 <mycode>HTML5</mycode> 新增的属性， <strong>用于监听 DOM 修改事件，能够监听到节点的属性、文本内容、子节点等的改动</strong> ，是一个功能强大的利器，基本用法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MO基本用法</span></span><br><span class="line"><span class="keyword">var</span> observer = <span class="keyword">new</span> MutationObserver(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </span><br><span class="line">    <span class="comment">//这里是回调函数  </span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;DOM被修改了！&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> article = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;article&#x27;</span>);observer.observer(article);</span><br></pre></td></tr></table></figure>
+<p>MO 的使用不是本篇重点。这里我们要思考的是：vue 是不是用 MO 来监听 DOM 更新完毕的呢？<br>那就打开 vue 的源码看看吧，在实现 nextTick 的地方，确实能看到这样的代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//vue@2.2.5 /src/core/util/env.js</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> MutationObserver !== <span class="string">&#x27;undefined&#x27;</span> &amp;&amp; (isNative(MutationObserver) || MutationObserver.toString() === <span class="string">&#x27;[object MutationObserverConstructor]&#x27;</span>)) &#123;  </span><br><span class="line">    <span class="keyword">var</span> counter = <span class="number">1</span>  </span><br><span class="line">    <span class="keyword">var</span> observer = <span class="keyword">new</span> MutationObserver(nextTickHandler)  </span><br><span class="line">    <span class="keyword">var</span> textNode = <span class="built_in">document</span>.createTextNode(<span class="built_in">String</span>(counter))  </span><br><span class="line"></span><br><span class="line">    observer.observe(textNode, &#123;      </span><br><span class="line">        characterData: <span class="literal">true</span>  </span><br><span class="line">    &#125;)  </span><br><span class="line"></span><br><span class="line">    timerFunc = <span class="function">() =&gt;</span> &#123;    </span><br><span class="line">        counter = (counter + <span class="number">1</span>) % <span class="number">2</span>    </span><br><span class="line">        textNode.data = <span class="built_in">String</span>(counter)  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>简单解释一下，如果检测到浏览器支持 MO，则创建一个文本节点，监听这个文本节点的改动事件，以此来触发 <mycode>nextTickHandler</mycode>（也就是 DOM 更新完毕回调）的执行。后面的代码中，会执行手工修改文本节点属性，这样就能进入到回调函数了。</p>
+<h4 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h4><p>在js的运行环境中，我们这里光说浏览器吧，通常伴随着很多事件的发生，比如用户点击、页面渲染、脚本执行、网络请求，等等。为了协调这些事件的处理，浏览器使用事件循环机制。<br>简要来说，事件循环会维护一个或多个任务队列（task queues），以上提到的事件作为任务源往队列中加入任务。有一个持续执行的线程来处理这些任务，每执行完一个就从队列中移除它，这就是一次事件循环了，如下图所示：</p>
+<p><img src="/2021/03/20/Vue-nextTick/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.png"></p>
+<p>我们平时用 <mycode>setTimeout</mycode> 来执行异步代码，其实就是在任务队列的末尾加入了一个task，待前面的任务都执行完后再执行它。<br>关键的地方来了，每次 <mycode>event loop</mycode> 的最后，会有一个 <mycode>UI render</mycode> 步骤，也就是更新 DOM。标准为什么这样设计呢？考虑下面的代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">100</span>; i++)&#123;    </span><br><span class="line">    dom.style.left = i + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>浏览器会进行 100 次DOM更新吗？显然不是的，这样太耗性能了。事实上，这 100 次for循环同属一个task，浏览器只在该 task 执行完后<strong>进行一次DOM更新</strong>。<br>那我们的思路就来了：只要让 <mycode>nextTick</mycode> 里的代码放在 <mycode>UI render</mycode> 步骤后面执行，岂不就能访问到更新后的 DOM 了？</p>
+<p>vue就是这样的思路，<span style="color:coral;font-weight:700;">并不是用 MO 进行 DOM 变动监听，而是用队列控制的方式达到目的。</span> 那么 vue 又是如何做到队列控制的呢？我们可以很自然的想到 <mycode>setTimeout</mycode> ，把 <mycode>nextTick</mycode> 要执行的代码当作下一个 task 放入队列末尾。</p>
+<p>然而事情却没这么简单，vue 的数据响应过程包含： <strong>数据更改-&gt;通知Watcher-&gt;更新DOM。</strong> 而数据的更改不由我们控制，可能在任何时候发生。如果恰巧发生在 <mycode>repaint</mycode> 之前，就会发生多次渲染。这意味着性能浪费，是 vue 不愿意看到的。</p>
+<p>所以，vue 的队列控制是经过了深思熟虑的（也经过了多次改动）。在这之前，我们还需了解 <mycode>event loop</mycode> 的另一个重要概念，<mycode>microtask</mycode>。</p>
+<h4 id="microtask-微任务"><a href="#microtask-微任务" class="headerlink" title="microtask(微任务)"></a>microtask(微任务)</h4><p><mycode>macrotask</mycode> 总要等到 <mycode>microtask</mycode> 都执行完后才能执行， <mycode>microtask</mycode> 有着更高的优先级。<br><mycode>microtask</mycode> 的这一特性，简直是做队列控制的最佳选择啊！ <strong>vue 进行 DOM 更新内部也是调用 nextTick 来做异步队列控制。</strong> 而当我们自己调用 <mycode>nextTick</mycode> 的时候，它就在更新 DOM 的那个 <mycode>microtask</mycode> 后追加了我们自己的回调函数，从而确保我们的代码在 DOM 更新后执行，同时也避免了 <mycode>setTimeout</mycode> 可能存在的多次执行问题。<br>常见的 <mycode>microtask</mycode> 有：Promise、MutationObserver、Object.observe(废弃)，以及 nodejs 中的process.nextTick。</p>
+<p>好像看到了 <mycode>MutationObserver</mycode>，难道说 vue 用 MO 是想利用它的 <mycode>microtask</mycode> 特性，而不是想做 DOM 监听？对喽，就是这样的。核心是 microtask，用不用 MO 都行的。事实上，vue在2.5版本中已经删去了 MO 相关的代码，因为它是 HTML5 新增的特性，在iOS上尚有bug。<br>那么最优的 <mycode>microtask</mycode> 策略就是 <mycode>Promise</mycode> 了，而令人尴尬的是， Promise 是 <mycode>ES6</mycode> 新增的东西，也存在兼容问题呀~ 所以 vue 就面临一个降级策略。</p>
+<h4 id="vue的降级策略"><a href="#vue的降级策略" class="headerlink" title="vue的降级策略"></a>vue的降级策略</h4><p>队列控制的最佳选择是 microtask，而 microtask 的最佳选择是 Promise 。但如果当前环境不支持 Promise ，vue 就不得不降级为 macrotask 来做队列控制了。</p>
+<p>macrotask 有哪些可选的方案呢？前面提到了 setTimeout 是一种，但它不是理想的方案。因为 setTimeout 执行的最小时间间隔是约4ms的样子，略微有点延迟。还有其他的方案吗？</p>
+<p>不卖关子了，在vue2.5的源码中，macrotask 降级的方案依次是：setImmediate、MessageChannel、setTimeout.</p>
+<ol>
+<li>setImmediate是最理想的方案了，可惜的是只有IE和nodejs支持。</li>
+<li>MessageChannel 的 onmessage 回调也是 microtask，但也是个新API，面临兼容性的尴尬…</li>
+<li>所以最后的兜底方案就是 setTimeout 了，尽管它有执行延迟，可能造成多次渲染，算是没有办法的办法了。</li>
+</ol>
+<blockquote>
+<p>总结：<br>vue 的 <mycode>nextTick</mycode> 方法的实现原理了，总结一下就是：</p>
+<ul>
+<li>vue 用 <strong>异步队列</strong> 的方式来控制 DOM 更新和 <mycode>nextTick</mycode> 回调先后执行</li>
+<li><mycode>microtask</mycode> 因为其高优先级特性，能确保队列中的微任务在一次事件循环前被执行完毕</li>
+<li>因为兼容性问题，vue 不得不做了 <mycode>microtask</mycode> 向 <mycode>macrotask</mycode> 的降级方案</li>
+</ul>
+</blockquote>
+<h4 id="Vue-nextTick-怎么用"><a href="#Vue-nextTick-怎么用" class="headerlink" title="Vue.nextTick() 怎么用"></a>Vue.nextTick() 怎么用</h4><p><strong>语法：</strong> <mycode>Vue.nextTick([callback, context])</mycode></p>
+<p><strong>参数：</strong></p>
+<p><mycode>{Function} [callback]</mycode>：回调函数，不传时提供 promise 调用<br><mycode>{Object} [context]</mycode>：回调函数执行的上下文环境，不传默认是自动绑定到调用它的实例上。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//改变数据</span></span><br><span class="line">vm.message = <span class="string">&#x27;changed&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//想要立即使用更新后的DOM。这样不行，因为设置message后DOM还没有更新</span></span><br><span class="line"><span class="built_in">console</span>.log(vm.$el.textContent) <span class="comment">// 并不会得到&#x27;changed&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//这样可以，nextTick里面的代码会在DOM更新后执行</span></span><br><span class="line">Vue.nextTick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// DOM 更新了</span></span><br><span class="line">    <span class="comment">//可以得到&#x27;changed&#x27;</span></span><br><span class="line">    <span class="built_in">console</span>.log(vm.$el.textContent)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 作为一个 Promise 使用 即不传回调</span></span><br><span class="line">Vue.nextTick()</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// DOM 更新了</span></span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Vue 实例方法 <mycode>vm.$nextTick</mycode> 做了进一步封装，把 <mycode>context</mycode> 参数设置成当前 Vue 实例。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>使用 <mycode>Vue.nextTick()</mycode> 是为了可以获取更新后的 DOM 。<br><strong>触发时机</strong>：在同一事件循环中的数据变化后，DOM 完成更新，立即执行 <mycode>Vue.nextTick()</mycode> 的回调。</p>
+<blockquote>
+<p>同一事件循环中的代码执行完毕 -&gt; DOM 更新 -&gt; nextTick callback触发<br><img src="/2021/03/20/Vue-nextTick/nextTick.png" alt="nextTick"></p>
+</blockquote>
+<p><strong>应用场景：</strong></p>
+<ol>
+<li><p>在 Vue 生命周期的 <mycode>created()</mycode> 钩子函数进行的 DOM 操作一定要放在 <mycode>Vue.nextTick()</mycode> 的回调函数中。<br>原因：是 <mycode>created()</mycode> 钩子函数执行时 DOM 其实并未进行渲染。</p>
+</li>
+<li><p>在数据变化后要执行的某个操作，而这个操作需要使用随数据改变而改变的 DOM 结构的时候，这个操作应该放在 Vue.nextTick() 的回调函数中。<br>原因：Vue 异步执行 DOM 更新，只要观察到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据改变，如果同一个 watcher 被多次触发，只会被推入到队列中一次。</p>
+</li>
+</ol>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903590293684231">https://juejin.cn/post/6844903590293684231</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020499713#what">https://segmentfault.com/a/1190000020499713#what</a></li>
+</ul>
+<style>
+mycode {
+    background-color: #fef4f5;
+    color: #FF6342;
+}
+</style></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Shen Shen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/03/20/Vue-nextTick/">http://example.com/2021/03/20/Vue-nextTick/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">shenshen's study blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/vue/">vue</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/03/17/vue-router/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">vue-router</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/03/17/vue/" title="vue"><img class="cover" src="https://cdn.pixabay.com/photo/2020/08/17/18/38/cat-5496162_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-17</div><div class="title">vue</div></div></a></div><div><a href="/2021/03/17/vue组件通信/" title="vue组件通信"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/08/16/03/dinosaur-5995333_1280.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-17</div><div class="title">vue组件通信</div></div></a></div><div><a href="/2021/03/17/vue-router/" title="vue-router"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-17</div><div class="title">vue-router</div></div></a></div><div><a href="/2021/03/17/vuex/" title="vuex"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/13/21/43/field-6012856_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-17</div><div class="title">vuex</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%90%86%E8%A7%A3-MutationObserver"><span class="toc-number">1.</span> <span class="toc-text">理解 MutationObserver</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF"><span class="toc-number">2.</span> <span class="toc-text">事件循环</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#microtask-%E5%BE%AE%E4%BB%BB%E5%8A%A1"><span class="toc-number">3.</span> <span class="toc-text">microtask(微任务)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vue%E7%9A%84%E9%99%8D%E7%BA%A7%E7%AD%96%E7%95%A5"><span class="toc-number">4.</span> <span class="toc-text">vue的降级策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vue-nextTick-%E6%80%8E%E4%B9%88%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">Vue.nextTick() 怎么用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">小结</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Shen Shen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
