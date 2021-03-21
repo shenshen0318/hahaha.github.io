@@ -1,0 +1,329 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>变量类型和计算 | shenshen's study blog</title><meta name="keywords" content="JS"><meta name="author" content="Shen Shen"><meta name="copyright" content="Shen Shen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="变量类型值类型和引用类型 值类型(基本数据类型)string, number, boolean, undefined, null, symbol 6种  JS 的数字类型是 浮点类型的，没有整型。并且浮点类型基于 IEEE 754 标准实现，在使用中会遇到某些 Bug NaN 也属于 number 类型，并且 NaN 不等于自身。 对于基本类型来说，如果使用字面量的方式，那么这个变量只是个字面量，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="变量类型和计算">
+<meta property="og:url" content="http://example.com/2021/03/21/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%92%8C%E8%AE%A1%E7%AE%97/index.html">
+<meta property="og:site_name" content="shenshen&#39;s study blog">
+<meta property="og:description" content="变量类型值类型和引用类型 值类型(基本数据类型)string, number, boolean, undefined, null, symbol 6种  JS 的数字类型是 浮点类型的，没有整型。并且浮点类型基于 IEEE 754 标准实现，在使用中会遇到某些 Bug NaN 也属于 number 类型，并且 NaN 不等于自身。 对于基本类型来说，如果使用字面量的方式，那么这个变量只是个字面量，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2021/02/08/16/03/dinosaur-5995333_1280.png">
+<meta property="article:published_time" content="2021-03-21T06:24:29.000Z">
+<meta property="article:modified_time" content="2021-03-21T08:13:19.447Z">
+<meta property="article:author" content="Shen Shen">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2021/02/08/16/03/dinosaur-5995333_1280.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/03/21/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%92%8C%E8%AE%A1%E7%AE%97/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-21 16:13:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2021/02/08/16/03/dinosaur-5995333_1280.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">shenshen's study blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">变量类型和计算</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-21T06:24:29.000Z" title="发表于 2021-03-21 14:24:29">2021-03-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-21T08:13:19.447Z" title="更新于 2021-03-21 16:13:19">2021-03-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/JS/">JS</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h3><h4 id="值类型和引用类型"><a href="#值类型和引用类型" class="headerlink" title="值类型和引用类型"></a>值类型和引用类型</h4><ol>
+<li><p>值类型(基本数据类型)<br><mycode>string</mycode>, <mycode>number</mycode>, <mycode>boolean</mycode>, <mycode>undefined</mycode>, <mycode>null</mycode>, <mycode>symbol</mycode> 6种</p>
+<ul>
+<li><mycode>JS</mycode> 的数字类型是 <mycode>浮点类型的</mycode>，<strong>没有整型</strong>。并且浮点类型基于 <mycode>IEEE 754</mycode> 标准实现，在使用中会遇到某些 Bug</li>
+<li><mycode>NaN</mycode> 也属于 <mycode>number</mycode> 类型，并且 <mycode>NaN</mycode> 不等于自身。</li>
+<li>对于基本类型来说，如果使用字面量的方式，那么这个变量只是个字面量，只有在必要的时候才会转换为对应的类型。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">111</span> <span class="comment">// 这只是字面量，不是 number 类型</span></span><br><span class="line">a.toString() <span class="comment">// 使用时候才会转换为对象类型</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>引用类型<br> <mycode>Object</mycode>、 <mycode>Array</mycode>、 <mycode>Funtion</mycode>。细分的话:有 Object、 Array、 Funtion、 Date、 RegExp 等</p>
+</li>
+</ol>
+<blockquote>
+<p>问：js 有哪些内置对象</p>
+</blockquote>
+<ul>
+<li><mycode>Object</mycode> 是 JavaScript 中所有对象的父对象</li>
+<li>数据封装类对象：<mycode>Object</mycode>、<mycode>Array</mycode>、<mycode>Boolean</mycode>、<mycode>Number</mycode> 和 <mycode>String</mycode></li>
+<li>其他对象：<mycode>Function</mycode>、<mycode>Arguments</mycode>、<mycode>Math</mycode>、<mycode>Date</mycode>、<mycode>RegExp</mycode>、<mycode>Error</mycode></li>
+</ul>
+<h4 id="基本类型和引用类型的区别"><a href="#基本类型和引用类型的区别" class="headerlink" title="基本类型和引用类型的区别"></a>基本类型和引用类型的区别</h4><ol>
+<li><p>内存的分配不同</p>
+<ul>
+<li>基本数据类型存储在 <mycode>栈</mycode> 中。</li>
+<li>复杂数据类型存储在 <mycode>堆</mycode> 中，<strong>栈中存储的变量，是指向堆中的引用地址</strong></li>
+<li>栈(操作系统): 由操作系统自动分配释放，存放 <mycode>函数的参数值和局部变量的值</mycode> 等。</li>
+<li>堆(操作系统): 一般由程序员分配释放，若程序员不释放，程序结束时可能由 OS 回收，分配方式倒是类似于链表。其实在堆中一般存放变量是一些 <mycode>对象类型</mycode></li>
+</ul>
+</li>
+<li><p>访问机制不同</p>
+<ul>
+<li>值类型 <mycode>按值访问</mycode></li>
+<li>引用类型 <mycode>按引用访问</mycode></li>
+</ul>
+</li>
+<li><p>赋值变量时不同(a=b)</p>
+<ul>
+<li>基本数据类型: a=b; 是将 b 中保存的 <mycode>原始值的副本</mycode> 赋值给新变量 a，<strong>a 和 b 完全独立，互不影响</strong></li>
+<li>复杂数据类型: a=b; 将 b 保存的 <mycode>对象内存的引用地址</mycode> 赋值给了新变量 a; <strong>a 和 b 指向了同一个堆内存地址</strong>，其中一个值发生了改变，另一个也会改变。</li>
+</ul>
+</li>
+<li><p>参数传递的不同(实参/形参)</p>
+<ul>
+<li><strong>函数传参都是按值传递(栈中的存储的内容):</strong><ul>
+<li>基本数据类型，<mycode>拷贝的是值</mycode>;</li>
+<li>复杂数据类型，<mycode>拷贝的是引用地址</mycode></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="判断数据类型"><a href="#判断数据类型" class="headerlink" title="判断数据类型"></a>判断数据类型</h4><ol>
+<li>typeof<blockquote>
+<p><mycode>typeof</mycode> 是否能正确判断类型？instanceof 能正确判断对象的原理是什么<br>答：<mycode>typeof</mycode> 并不能准确判断变量到底是什么类型，如果我们想判断一个对象的正确类型，这时候可以考虑使用 <mycode>instanceof</mycode>，因为内部机制是通过 <strong>原型链</strong> 来判断的<br>注意： <strong>typeof 的返回值是一个字符串</strong></p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li>typeof 对于 <mycode>基本类型</mycode> 来说，除了 <mycode>null</mycode> 都可以显示正确的类型  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="number">1</span> <span class="comment">// &#x27;number&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">&#x27;1&#x27;</span> <span class="comment">// &#x27;string&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span> <span class="comment">// &#x27;undefined&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span> <span class="comment">// &#x27;boolean&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Symbol</span>() <span class="comment">// &#x27;symbol&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span>  <span class="comment">// &quot;object&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>typeof 对于对象来说，<strong>除了函数都会显示 object</strong>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> [] <span class="comment">// &#x27;object&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;&#125; <span class="comment">// &#x27;object&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">console</span>.log <span class="comment">// &#x27;function&#x27;</span></span><br></pre></td></tr></table></figure></li>
+<li>所以说 typeof 并不能准确判断变量到底是什么类型</li>
+</ul>
+<ol start="2">
+<li>instanceof</li>
+</ol>
+<ul>
+<li><p><mycode>instanceof</mycode> 运算符返回一个<strong>布尔值</strong>，表示对象是否为某个构造函数的实例。instanceof 可以正确的判断对象的类型，因为内部机制是通过判断对象的原型链中是不是能找到类型的 <mycode>prototype</mycode></p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">&#x27;hello world&#x27;</span></span><br><span class="line">str <span class="keyword">instanceof</span> <span class="built_in">String</span> <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str1 = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line">str1 <span class="keyword">instanceof</span> <span class="built_in">String</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure></li>
+<li><p>缺点: instanceof 运算符只能用于对象(纯对象和数组)，<strong>不适用原始类型</strong> (Undefined、Null、Boolean、Number 和 String)的值。</p>
+</li>
+<li><p>自己实现一个 instanceof</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myInstanceOf</span>(<span class="params">target, origin</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> proto = target.__proto__;</span><br><span class="line">  <span class="keyword">if</span>(proto)&#123;</span><br><span class="line">    <span class="keyword">if</span>(proto === origin.prototype)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          <span class="comment">// 继续在原型链上查找</span></span><br><span class="line">        <span class="keyword">return</span> myInstanceOf(proto, origin);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 如果proto为null，直接return false</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="3">
+<li>Object.prototype.toString.call()</li>
+</ol>
+<ul>
+<li>可以通过 <mycode>Object.prototype.toString</mycode> 方法准确判断某个<strong>对象值</strong>属于哪种内置类型。这样我们就可以获得类似 <mycode>[object Type]</mycode> 的字符串。</li>
+<li>判断是不是数组  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.prototype.toString.call(arg) === <span class="string">&#x27;[object Array]&#x27;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="4">
+<li>constructor</li>
+</ol>
+<ul>
+<li><mycode>constructor</mycode> 属性的作用是，可以得知某个实例对象，到底是哪一个构造函数产生的。  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f = <span class="keyword">new</span> F(); </span><br><span class="line">f.constructor === F;  <span class="comment">// true</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>问：如何判断一个对象是否为数组<br>答：一共有 4 种方法：<mycode>instanceof</mycode>  – <mycode>Object.prototype.toString()</mycode> – <mycode>constructor</mycode> 和 数组中答一个api <mycode>Array.isArray()</mycode></p>
+</blockquote>
+<ol>
+<li><p>instanceof</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [];</span><br><span class="line">arr <span class="keyword">instanceof</span> <span class="built_in">Array</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Object.prototype.toString()</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.prototype.toString.call(arr) === <span class="string">&#x27;[Object Array]&#x27;</span> </span><br></pre></td></tr></table></figure></li>
+<li><p>constructor</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr.constructor === <span class="built_in">Array</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Array.isArray()</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.isArray(arr)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="变量计算-强制类型转换"><a href="#变量计算-强制类型转换" class="headerlink" title="变量计算(强制类型转换)"></a>变量计算(强制类型转换)</h3><h4 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h4><blockquote>
+<p>首先我们要知道，在 JS 中类型转换<strong>只有三种情况</strong>，分别是：</p>
+</blockquote>
+<ol>
+<li>转换为布尔值<br> 在条件判断时，除了以下的值，其他所有值都转为 true，包括<strong>所有对象/引用类型</strong><ul>
+<li><mycode>undefined</mycode></li>
+<li><mycode>null</mycode> </li>
+<li><mycode>false</mycode></li>
+<li><mycode>NaN</mycode></li>
+<li><mycode>‘’</mycode> 空字符串 </li>
+<li><mycode>0</mycode> 和 <mycode>-0</mycode></li>
+</ul>
+</li>
+</ol>
+<p><img src="/2021/03/21/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%92%8C%E8%AE%A1%E7%AE%97/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.png" alt="类型转换"></p>
+<h4 id="对象转原始类型"><a href="#对象转原始类型" class="headerlink" title="对象转原始类型"></a>对象转原始类型</h4><p>对象在转换类型的时候，会调用内置的 <mycode>[[ToPrimitive]]</mycode> 函数，对于该函数来说，算法逻辑一般来说如下(优先级依次递减):</p>
+<ul>
+<li>如果已经是原始类型了，那就不需要转换了</li>
+<li>调用 <mycode>x.valueOf()</mycode>，如果转换为基础类型，就返回转换的值</li>
+<li>调用 <mycode>x.toString()</mycode>，如果转换为基础类型，就返回转换的值</li>
+<li>如果都没有返回原始类型，就会报错<br>当然你也可以重写 <mycode>Symbol.toPrimitive</mycode>，该方法在转原始类型时调用优先级最高。</li>
+</ul>
+<blockquote>
+<p>一道典型的题目：<br>问： a为 ？？？ 的时候，下面的语句会输出？</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="keyword">if</span>(a==<span class="number">1</span> &amp;&amp; a==<span class="number">2</span> &amp;&amp; a==<span class="number">3</span>)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;输出成功!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>答案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">a = &#123;</span><br><span class="line">    count: <span class="number">1</span>,</span><br><span class="line">    <span class="function"><span class="title">valueOf</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.count++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 或 valueOf 的优先级高于 toString</span></span><br><span class="line">    <span class="function"><span class="title">toString</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.count++;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 或 这个优先级最高</span></span><br><span class="line">     [<span class="built_in">Symbol</span>.toPrimitive]() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.count++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="运算符"><a href="#运算符" class="headerlink" title="+ 运算符"></a>+ 运算符</h4><ul>
+<li><p>运算中其中一方为字符串，那么就会把另一方也转换为字符串</p>
+</li>
+<li><p>如果一方不是字符串或者数字，那么会将它转换为数字或者字符串</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> + <span class="string">&#x27;1&#x27;</span> <span class="comment">// &#x27;11&#x27;</span></span><br><span class="line"><span class="literal">true</span> + <span class="literal">true</span> <span class="comment">// 2</span></span><br><span class="line"><span class="number">4</span> + [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] <span class="comment">// &quot;41,2,3&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>另外对于加法还需要注意这个表达式 ‘a’ + + ‘b’</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;a&#x27;</span> + + <span class="string">&#x27;b&#x27;</span> <span class="comment">// -&gt; &quot;aNaN&quot;</span></span><br></pre></td></tr></table></figure>
+<p>因为 <mycode>+ ‘b’</mycode> 等于 NaN，所以结果为 “aNaN”，你可能也会在一些代码中看到过 <mycode>+ ‘1’</mycode> 的形式来快速获取 <mycode>number</mycode> 类型。</p>
+</li>
+<li><p>一元运算符 + 的另一个常见用途是将 日期(Date)对象 强制类型转换为数字，返回结果为Unix时间戳。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> time = +<span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line"><span class="built_in">console</span>.log(time)   <span class="comment">// 1616313054387</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h4><ul>
+<li>如果是对象，就通过 <mycode>toPrimitive</mycode> 转换对象</li>
+<li>如果是字符串，就通过 <mycode>unicode</mycode> 字符索引来比较<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">  <span class="function"><span class="title">valueOf</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">toString</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;1&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">a &gt; -<span class="number">1</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+在以上代码中，因为 <mycode>a</mycode> 是对象，所以会通过 <mycode>valueOf</mycode> 转换为原始类型再比较值。</li>
+</ul>
+<h4 id="和-宽松相等和严格相等"><a href="#和-宽松相等和严格相等" class="headerlink" title="== 和 ===(宽松相等和严格相等)"></a>== 和 ===(宽松相等和严格相等)</h4><p>区别： <mycode>==</mycode> 允许在相等比较中进行强制类型转换，而 <mycode>===</mycode> 不允许</p>
+<ul>
+<li>==<br>对于 == 来说，如果对比双方的类型不一样的话，就会进行类型转换</li>
+</ul>
+<p><strong>假如我们需要对比 x 和 y 是否相同，就会进行如下判断流程</strong></p>
+<ol>
+<li>首先会判断两者类型是否相同。相同的话就是比大小了</li>
+<li>类型不相同的话，那么就会进行类型转换<ul>
+<li>会先判断是否在对比 <mycode>null</mycode> 和 <mycode>undefined</mycode>，是的话就会返回 <mycode>true</mycode><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span>  <span class="comment">// true</span></span><br></pre></td></tr></table></figure></li>
+<li>判断两者类型是否为 <mycode>string</mycode> 和 <mycode>number</mycode>，是的话就会<strong>将字符串转换为 number</strong><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> == <span class="string">&#x27;1&#x27;</span></span><br><span class="line">      ↓</span><br><span class="line"><span class="number">1</span> ==  <span class="number">1</span></span><br></pre></td></tr></table></figure></li>
+<li>判断其中一方是否为 <mycode>boolean</mycode>，是的话就会把 <mycode>boolean</mycode> 转为 <mycode>number</mycode> 再进行判断<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;1&#x27;</span> == <span class="literal">true</span></span><br><span class="line">        ↓</span><br><span class="line"><span class="string">&#x27;1&#x27;</span> ==  <span class="number">1</span></span><br><span class="line">        ↓</span><br><span class="line"> <span class="number">1</span>  ==  <span class="number">1</span></span><br></pre></td></tr></table></figure></li>
+<li>判断其中一方是否为 <mycode>object</mycode> 且另一方为 <mycode>string</mycode>、<mycode>number</mycode> 或者 <mycode>symbol</mycode>，是的话就会把 object 转为原始类型再进行判断<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;1&#x27;</span> == &#123; <span class="attr">name</span>: <span class="string">&#x27;hhh&#x27;</span> &#125;</span><br><span class="line">                ↓       </span><br><span class="line"><span class="string">&#x27;1&#x27;</span> == <span class="string">&#x27;[object Object]&#x27;</span></span><br></pre></td></tr></table></figure>
+<img src="/2021/03/21/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%92%8C%E8%AE%A1%E7%AE%97/==%E6%AF%94%E8%BE%83.png" alt="==比较"></li>
+</ul>
+</li>
+</ol>
+<p>PS：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> == <span class="string">&#x27;\n&#x27;</span>  <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>===</li>
+</ul>
+<p>对于 === 来说就简单多了，就是判断两者 <strong>类型和值</strong> 是否相同</p>
+<blockquote>
+<p>问：何时使用 === 何时使用 == ?<br>答：除了判断对象属性是否为空 和 看是否函数的参数为空的情况 ，其余的都用 === 。</p>
+</blockquote>
+<blockquote>
+<p>问： a为 ？？？ 的时候，下面的语句会输出？</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="keyword">if</span>(a==<span class="number">1</span> &amp;&amp; a==<span class="number">2</span> &amp;&amp; a==<span class="number">3</span>)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;输出成功!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其他解法：<br><strong>利用数据劫持</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用 Object.defineProperty 定义的属性，在获取属性时，会调用 get 方法。利用 这个特性，我们在 window 对象上定义 a 属性</span></span><br><span class="line"><span class="keyword">let</span> i = <span class="number">1</span>; </span><br><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">window</span>, <span class="string">&#x27;a&#x27;</span>, &#123;</span><br><span class="line">    get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">        <span class="keyword">return</span> i++;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(a == <span class="number">1</span> &amp;&amp; a == <span class="number">2</span> &amp;&amp; a == <span class="number">3</span>); <span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 利用ES6 Proxy</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> <span class="built_in">Proxy</span>(&#123;&#125;, &#123; </span><br><span class="line">    i: <span class="number">1</span>,</span><br><span class="line">    get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="function">() =&gt;</span> <span class="built_in">this</span>.i++;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(a == <span class="number">1</span> &amp;&amp; a == <span class="number">2</span> &amp;&amp; a == <span class="number">3</span>); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+
+<style>
+mycode {
+    background-color: #fef4f5;
+    color: #FF6342;
+}
+</style></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Shen Shen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/03/21/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%92%8C%E8%AE%A1%E7%AE%97/">http://example.com/2021/03/21/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%92%8C%E8%AE%A1%E7%AE%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">shenshen's study blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JS/">JS</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2021/02/08/16/03/dinosaur-5995333_1280.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/03/20/MVVM/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2020/08/17/18/38/cat-5496162_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MVVM</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/02/28/面试中常见的js手写题/" title="面试中常见的JS手写题"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/13/13/02/red-lighthouse-6011477_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-28</div><div class="title">面试中常见的JS手写题</div></div></a></div><div><a href="/2021/03/09/事件/" title="事件"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-09</div><div class="title">事件</div></div></a></div><div><a href="/2021/03/11/Event_Loop/" title="Event Loop"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/13/13/02/red-lighthouse-6011477_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-11</div><div class="title">Event Loop</div></div></a></div><div><a href="/2021/03/12/设计模式/" title="设计模式"><img class="cover" src="https://cdn.pixabay.com/photo/2020/08/17/18/38/cat-5496162_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-12</div><div class="title">设计模式</div></div></a></div><div><a href="/2021/03/17/Virtual_DOM/" title="Virtual DOM"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/13/21/43/field-6012856_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-17</div><div class="title">Virtual DOM</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">变量类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">值类型和引用类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.2.</span> <span class="toc-text">基本类型和引用类型的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">判断数据类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E8%AE%A1%E7%AE%97-%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.</span> <span class="toc-text">变量计算(强制类型转换)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.1.</span> <span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E8%BD%AC%E5%8E%9F%E5%A7%8B%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.2.</span> <span class="toc-text">对象转原始类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.3.</span> <span class="toc-text">+ 运算符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.4.</span> <span class="toc-text">比较运算符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%92%8C-%E5%AE%BD%E6%9D%BE%E7%9B%B8%E7%AD%89%E5%92%8C%E4%B8%A5%E6%A0%BC%E7%9B%B8%E7%AD%89"><span class="toc-number">2.5.</span> <span class="toc-text">&#x3D;&#x3D; 和 &#x3D;&#x3D;&#x3D;(宽松相等和严格相等)</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Shen Shen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
