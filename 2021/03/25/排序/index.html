@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>排序 | shenshen's study blog</title><meta name="keywords" content="算法,排序"><meta name="author" content="Shen Shen"><meta name="copyright" content="Shen Shen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="排序或许是前端接触最多的算法了，很多人的算法之路是从一个冒泡排序开始的，排序的方法有非常多中，它们各自有各自的应用场景和优缺点，这里我推荐如下 6 种应用最多的排序方法。  快速排序选择一个目标值，比目标值小的放左边，比目标值大的放右边，目标值的位置已排好，将左右两侧再进行快排。  归并排序将大序列二分成小序列，将小序列排序后再将排序后的小序列归并成大序列。  选择排序每次排序取一个最大或最小的数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序">
+<meta property="og:url" content="https://shenshen0318.github.io/2021/03/25/%E6%8E%92%E5%BA%8F/index.html">
+<meta property="og:site_name" content="shenshen&#39;s study blog">
+<meta property="og:description" content="排序或许是前端接触最多的算法了，很多人的算法之路是从一个冒泡排序开始的，排序的方法有非常多中，它们各自有各自的应用场景和优缺点，这里我推荐如下 6 种应用最多的排序方法。  快速排序选择一个目标值，比目标值小的放左边，比目标值大的放右边，目标值的位置已排好，将左右两侧再进行快排。  归并排序将大序列二分成小序列，将小序列排序后再将排序后的小序列归并成大序列。  选择排序每次排序取一个最大或最小的数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2020/08/17/18/38/cat-5496162_1280.jpg">
+<meta property="article:published_time" content="2021-03-25T09:55:04.000Z">
+<meta property="article:modified_time" content="2021-03-25T12:04:41.724Z">
+<meta property="article:author" content="Shen Shen">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="排序">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2020/08/17/18/38/cat-5496162_1280.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://shenshen0318.github.io/2021/03/25/%E6%8E%92%E5%BA%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-25 20:04:41'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2020/08/17/18/38/cat-5496162_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">shenshen's study blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">排序</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-25T09:55:04.000Z" title="发表于 2021-03-25 17:55:04">2021-03-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-25T12:04:41.724Z" title="更新于 2021-03-25 20:04:41">2021-03-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>排序或许是前端接触最多的算法了，很多人的算法之路是从一个冒泡排序开始的，排序的方法有非常多中，它们各自有各自的应用场景和优缺点，这里我推荐如下 6 种应用最多的排序方法。</p>
+<ul>
+<li><p><mycode>快速排序</mycode><br>选择一个目标值，比目标值小的放左边，比目标值大的放右边，目标值的位置已排好，将左右两侧再进行快排。</p>
+</li>
+<li><p><mycode>归并排序</mycode><br>将大序列二分成小序列，将小序列排序后再将排序后的小序列归并成大序列。</p>
+</li>
+<li><p><mycode>选择排序</mycode><br>每次排序取一个最大或最小的数字放到前面的有序序列中。</p>
+</li>
+<li><p><mycode>插入排序</mycode><br>将左侧序列看成一个有序序列，每次将一个数字插入该有序序列。插入时，从有序序列最右侧开始比较，若比较的数较大，后移一位。</p>
+</li>
+<li><p><mycode>冒泡排序</mycode><br>循环数组，比较当前元素和下一个元素，如果当前元素比下一个元素大，向上冒泡。下一次循环继续上面的操作，不循环已经排序好的数。</p>
+</li>
+<li><p><mycode>堆排序</mycode><br>创建一个大顶堆，大顶堆的堆顶一定是最大的元素。交换第一个元素和最后一个元素，让剩余的元素继续调整为大顶堆。从后往前以此和第一个元素交换并重新构建，排序完成。</p>
+</li>
+</ul>
+<h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><blockquote>
+<p>思想<br>循环数组，比较当前元素和下一个元素，如果当前元素比下一个元素大，向上冒泡。<br>这样一次循环之后最后一个数就是本数组最大的数。<br>下一次循环继续上面的操作，不循环已经排序好的数。<br>优化：当一次循环没有发生冒泡，说明已经排序完成，停止循环。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">12</span>, <span class="number">23</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">17</span>, <span class="number">49</span>, <span class="number">36</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;arr.length; i++)&#123;</span><br><span class="line">        <span class="keyword">let</span> complete = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j=<span class="number">0</span>; j&lt;arr.length-i-<span class="number">1</span>; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(arr[j+<span class="number">1</span>]&lt;arr[j])&#123;</span><br><span class="line">                [arr[j], arr[j+<span class="number">1</span>]] = [arr[j+<span class="number">1</span>],arr[j]];</span><br><span class="line">            &#125;</span><br><span class="line">            complete = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(complete) <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(bubbleSort(arr));   <span class="comment">// [2, 5, 12, 17, 23, 36, 49]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>复杂度</strong><br>时间复杂度: <mycode>O(n^2)</mycode><br>空间复杂度: <mycode>O(1)</mycode></p>
+<p><strong>稳定性</strong><br><mycode>稳定</mycode></p>
+<h4 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h4><blockquote>
+<p>将左侧序列看成一个有序序列，每次将一个数字插入该有序序列。<br>插入时，从有序序列最右侧开始比较，若比较的数较大，后移一位。</p>
+</blockquote>
+<p><img src="/2021/03/25/%E6%8E%92%E5%BA%8F/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F.gif" alt="插入排序"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">12</span>, <span class="number">23</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">17</span>, <span class="number">49</span>, <span class="number">36</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">1</span>; i&lt;arr.length; i++)&#123;</span><br><span class="line">        <span class="comment">// 记录当前要排序的元素</span></span><br><span class="line">        <span class="keyword">let</span> target = i;</span><br><span class="line">        <span class="comment">// 从有序序列的右侧想左依次比较</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j=i-<span class="number">1</span>; j&gt;=<span class="number">0</span>; j--)&#123;</span><br><span class="line">            <span class="comment">// 找到target要插入的位置</span></span><br><span class="line">            <span class="keyword">if</span>(arr[target] &lt; arr[j])&#123;</span><br><span class="line">                [arr[target], arr[j]] = [arr[j], arr[target]];</span><br><span class="line">                target = j;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(insertSort(arr));   <span class="comment">// [2, 5, 12, 17, 23, 36, 49]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>复杂度</strong><br>时间复杂度: <mycode>O(n^2)</mycode><br>空间复杂度: <mycode>O(1)</mycode></p>
+<p><strong>稳定性</strong><br><mycode>稳定</mycode></p>
+<h4 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h4><blockquote>
+<p>每次循环选取一个最小的数字放到前面的有序序列中。</p>
+</blockquote>
+<p><img src="/2021/03/25/%E6%8E%92%E5%BA%8F/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F.gif" alt="选择排序"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">12</span>, <span class="number">23</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">17</span>, <span class="number">49</span>, <span class="number">36</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">selectSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;arr.length-<span class="number">1</span>; i++)&#123;</span><br><span class="line">        <span class="comment">// 记录最小的元素为当前要排序的元素</span></span><br><span class="line">        <span class="keyword">let</span> minIndex = i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j=i+<span class="number">1</span>; j&lt;arr.length; j++)&#123;</span><br><span class="line">            <span class="comment">// 寻找后面待排元素的最小元素</span></span><br><span class="line">            <span class="keyword">if</span>(arr[j] &lt; arr[minIndex])&#123;</span><br><span class="line">                minIndex = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 每次循环选取一个最小的数字放到待排序的位置上</span></span><br><span class="line">        [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(selectSort(arr));    <span class="comment">// [2, 5, 12, 17, 23, 36, 49]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>复杂度</strong><br>时间复杂度: <mycode>O(n^2)</mycode><br>空间复杂度: <mycode>O(1)</mycode></p>
+<p><strong>稳定性</strong><br><mycode>不稳定</mycode></p>
+<h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><blockquote>
+<p>快速排序：通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据比另一部分的所有数据要小，再按这种方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，使整个数据变成有序序列。</p>
+</blockquote>
+<blockquote>
+<p>实现步骤：</p>
+<ul>
+<li>选择一个基准元素 target（一般选择第一个数）</li>
+<li>将比 target 小的元素移动到数组左边，比 target 大的元素移动到数组右边</li>
+<li>分别对 target 左侧和右侧的元素进行快速排序</li>
+<li>从上面的步骤中我们可以看出，快速排序也利用了分治的思想（将问题分解成一些小问题递归求解）</li>
+</ul>
+</blockquote>
+<p>下面是对序列6、1、2、7、9、3、4、5、10、8排序的过程：<br><img src="/2021/03/25/%E6%8E%92%E5%BA%8F/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F.jpg" alt="快速排序"><br><img src="/2021/03/25/%E6%8E%92%E5%BA%8F/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F.gif" alt="快速排序"></p>
+<p><strong>方法一</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">12</span>, <span class="number">23</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">17</span>, <span class="number">49</span>, <span class="number">36</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 终止条件 重要</span></span><br><span class="line">    <span class="keyword">if</span>(arr.length &lt; <span class="number">2</span>) <span class="keyword">return</span> arr;</span><br><span class="line">    <span class="keyword">let</span> target = arr[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">let</span> left = [], right = [];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">1</span>; i&lt;arr.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[i] &lt; target)&#123;</span><br><span class="line">            left.push(arr[i]);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            right.push(arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> quickSort(left).concat([target], quickSort(right));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(quickSort(arr));   <span class="comment">// [2, 5, 12, 17, 23, 36, 49]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>方法二</strong></p>
+<blockquote>
+<ul>
+<li>记录一个索引 l 从数组最左侧开始，记录一个索引 r 从数组右侧开始</li>
+<li>在 l &lt; r 的条件下，找到右侧小于 target 的值 arr[r]，并将其赋值到 arr[l]</li>
+<li>在 l &lt; r 的条件下，找到左侧大于 target 的值 arr[l]，并将其赋值到 arr[r]</li>
+<li>这样让 l = r 时，左侧的值全部小于 target，右侧的值全部小于 target，将 target 放到该位置<br>不需要额外存储空间，写法思路稍复杂（有能力推荐这种写法）</li>
+</ul>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">12</span>, <span class="number">23</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">17</span>, <span class="number">49</span>, <span class="number">36</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSort</span>(<span class="params">arr, start, end</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 终止条件 重要</span></span><br><span class="line">    <span class="keyword">if</span>(end - start &lt; <span class="number">1</span>) <span class="keyword">return</span> arr;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> target = arr[start];</span><br><span class="line">    <span class="keyword">let</span> l = start, r = end;</span><br><span class="line">    <span class="keyword">while</span>(l &lt; r)&#123;</span><br><span class="line">        <span class="keyword">while</span>(l &lt; r &amp;&amp; arr[r] &gt; target)&#123;</span><br><span class="line">            r--;</span><br><span class="line">        &#125;</span><br><span class="line">        arr[l] = arr[r];</span><br><span class="line">        <span class="keyword">while</span>(l &lt; r &amp;&amp; arr[l] &lt; target)&#123;</span><br><span class="line">            l++;</span><br><span class="line">        &#125;</span><br><span class="line">        arr[r] = arr[l];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 找到 target 在的位置</span></span><br><span class="line">    arr[l] = target;</span><br><span class="line">    <span class="comment">// 快排 target 左边的元素</span></span><br><span class="line">    quickSort(arr, start, l-<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 快排 target 右边的元素</span></span><br><span class="line">    quickSort(arr, l+<span class="number">1</span>, end);</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(quickSort(arr, <span class="number">0</span>, arr.length-<span class="number">1</span>));   <span class="comment">// [2, 5, 12, 17, 23, 36, 49]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>复杂度</strong><br>时间复杂度: 平均 <mycode>O(nlogn</mycode>)，最坏 O(n^2)，实际上大多数情况下小于O(nlogn)<br>空间复杂度: <mycode>O(logn)</mycode>（递归调用消耗)</p>
+<p><strong>稳定性</strong><br><mycode>不稳定</mycode></p>
+<h4 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h4><blockquote>
+<p>利用归并的思想实现的排序方法。<br>该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。（分治法将问题分成一些小的问题然后递归求解，而治的阶段则将分的阶段得到的各答案”修补”在一起，即分而治之)。<br><strong>分割：</strong><br>将数组从中点进行分割，分为左、右两个数组<br>递归分割左、右数组，<strong>直到数组长度小于2</strong></p>
+<p><strong>归并：</strong><br>如果需要合并，那么左右两数组已经有序了。<br>创建一个临时存储数组temp，比较两数组第一个元素，将较小的元素加入临时数组<br>若左右数组有一个为空，那么此时另一个数组一定大于 temp 中的所有元素，直接将其所有元素加入 temp</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">12</span>, <span class="number">23</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">17</span>, <span class="number">49</span>, <span class="number">36</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 终止条件</span></span><br><span class="line">    <span class="keyword">if</span>(arr.length &lt; <span class="number">2</span>) <span class="keyword">return</span> arr;</span><br><span class="line">    <span class="keyword">let</span> midIndex = <span class="built_in">Math</span>.floor(arr.length / <span class="number">2</span>);</span><br><span class="line">    <span class="comment">// 左侧数组</span></span><br><span class="line">    <span class="keyword">let</span> front = arr.slice(<span class="number">0</span>,midIndex);</span><br><span class="line">    <span class="comment">// 右侧数组</span></span><br><span class="line">    <span class="keyword">let</span> end = arr.slice(midIndex);</span><br><span class="line">    <span class="keyword">return</span> merge(mergeSort(front), mergeSort(end));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">front, end</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 对传入的两个数组进行合并</span></span><br><span class="line">    <span class="keyword">let</span> tmp = [];</span><br><span class="line">    <span class="keyword">while</span>(front.length &amp;&amp; end.length)&#123;</span><br><span class="line">        <span class="keyword">if</span>(front[<span class="number">0</span>] &lt; end[<span class="number">0</span>])&#123;</span><br><span class="line">            tmp.push(front.shift());</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            tmp.push(end.shift());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(front.length)&#123;</span><br><span class="line">        tmp.push(front.shift());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(end.length)&#123;</span><br><span class="line">        tmp.push(end.shift());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(mergeSort(arr));   <span class="comment">// [2, 5, 12, 17, 23, 36, 49]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>复杂度</strong><br>时间复杂度: <mycode>O(nlogn)</mycode><br>空间复杂度: <mycode>O(n)</mycode></p>
+<p><strong>稳定性</strong><br><mycode>稳定</mycode></p>
+<h4 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h4><blockquote>
+<p>堆排序的基本思想是：将待排序序列构造成一个大顶堆，此时，整个序列的最大值就是堆顶的根节点。将其与末尾元素进行交换，此时末尾就为最大值。然后将剩余 n-1 个元素重新构造成一个堆。如此反复执行，便能得到一个有序序列了。<br>步骤如下：</p>
+<ul>
+<li>创建一个大顶堆，大顶堆的堆顶一定是最大的元素。</li>
+<li>交换第一个元素和最后一个元素，让剩余的元素继续调整为大顶堆。</li>
+<li>从后往前依次和第一个元素交换并重新构建，排序完成。</li>
+</ul>
+</blockquote>
+<p><strong>步骤一 构造初始堆。将给定无序序列构造成一个大顶堆（一般升序采用大顶堆，降序采用小顶堆)。</strong></p>
+<p>a.假设给定无序序列结构如下<br><img src="/2021/03/25/%E6%8E%92%E5%BA%8F/%E5%88%9B%E5%BB%BA%E5%A0%86-1.png" alt="创建堆"></p>
+<ol>
+<li><p>此时我们从最后一个非叶子结点开始（叶结点自然不用调整，第一个非叶子结点 arr.length/2-1=5/2-1=1，也就是下面的6结点），从左至右，从下至上进行调整。<br><img src="/2021/03/25/%E6%8E%92%E5%BA%8F/%E5%88%9B%E5%BB%BA%E5%A0%86-2.png" alt="创建堆"></p>
+</li>
+<li><p>找到第二个非叶节点4，由于[4,9,8]中9元素最大，4和9交换。<br><img src="/2021/03/25/%E6%8E%92%E5%BA%8F/%E5%88%9B%E5%BB%BA%E5%A0%86-3.png" alt="创建堆"></p>
+</li>
+<li><p>这时，交换导致了子根[4,5,6]结构混乱，继续调整，[4,5,6]中6最大，交换4和6。<br><img src="/2021/03/25/%E6%8E%92%E5%BA%8F/%E5%88%9B%E5%BB%BA%E5%A0%86-4.png" alt="创建堆"></p>
+</li>
+<li><p>此时，我们就将一个无需序列构造成了一个大顶堆。</p>
+</li>
+</ol>
+<p><strong>步骤二 将堆顶元素与末尾元素进行交换，使末尾元素最大。然后继续调整堆，再将堆顶元素与末尾元素交换，得到第二大元素。如此反复进行交换、重建、交换。</strong></p>
+<p>a.将堆顶元素9和末尾元素4进行交换<br><img src="/2021/03/25/%E6%8E%92%E5%BA%8F/%E8%B0%83%E6%95%B4%E5%A0%86-1.png" alt="调整堆"></p>
+<p>b.重新调整结构，使其继续满足堆定义<br><img src="/2021/03/25/%E6%8E%92%E5%BA%8F/%E8%B0%83%E6%95%B4%E5%A0%86-2.png" alt="调整堆"></p>
+<p>c.再将堆顶元素8与末尾元素5进行交换，得到第二大元素8.<br><img src="/2021/03/25/%E6%8E%92%E5%BA%8F/%E8%B0%83%E6%95%B4%E5%A0%86-3.png" alt="调整堆"></p>
+<p>后续过程，继续进行调整，交换，如此反复进行，最终使得整个序列有序<br><img src="/2021/03/25/%E6%8E%92%E5%BA%8F/%E8%B0%83%E6%95%B4%E5%A0%86-4.png" alt="调整堆"></p>
+<p>再简单总结下堆排序的基本思路：<br>a.将无需序列构建成一个堆，根据升序降序需求选择大顶堆或小顶堆;<br>b.将堆顶元素与末尾元素交换，将最大元素”沉”到数组末端;<br>c.重新调整结构，使其满足堆定义，然后继续交换堆顶元素与当前末尾元素，反复执行调整+交换步骤，直到整个序列有序。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">12</span>, <span class="number">23</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">17</span>, <span class="number">49</span>, <span class="number">36</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">heapSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 先创建大顶堆</span></span><br><span class="line">    creatHeap(arr);</span><br><span class="line">    <span class="comment">// 从后往前依次和第一个元素交换</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=arr.length-<span class="number">1</span>; i&gt;<span class="number">0</span>; i--)&#123;</span><br><span class="line">        [arr[i], arr[<span class="number">0</span>]] = [arr[<span class="number">0</span>], arr[i]];</span><br><span class="line">        <span class="comment">// 调整剩余的元素为大顶堆</span></span><br><span class="line">        adjust(arr, <span class="number">0</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建大顶堆</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">creatHeap</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> len = arr.length;</span><br><span class="line">    <span class="comment">// 第一个开始调整的节点是 第一个非叶子节点</span></span><br><span class="line">    <span class="keyword">let</span> start = <span class="built_in">parseInt</span>(len/<span class="number">2</span>)-<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 从第一个非叶子结点从下至上，从右至左调整结构</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = start; i&gt;=<span class="number">0</span>; i--)&#123;</span><br><span class="line">        adjust(arr, i, len);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调整堆</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">adjust</span>(<span class="params">arr, target, len</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=target*<span class="number">2</span>+<span class="number">1</span>; i&lt;len; i=<span class="number">2</span>*i+<span class="number">1</span>)&#123;  <span class="comment">// 从 target 结点的左子结点开始，也就是 target*2+1 处开始</span></span><br><span class="line">        <span class="keyword">if</span>(i+<span class="number">1</span>&lt;len &amp;&amp; arr[i+<span class="number">1</span>]&gt;arr[i])&#123;  <span class="comment">//如果左子结点小于右子结点，i 指向右子结点</span></span><br><span class="line">            i = i+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 下沉 如果子节点大于父节点</span></span><br><span class="line">        <span class="keyword">if</span>(arr[i] &gt; arr[target])&#123;</span><br><span class="line">            [arr[i], arr[target]] = [arr[target], arr[i]];</span><br><span class="line">            target = i;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(heapSort(arr));   <span class="comment">// [2, 5, 12, 17, 23, 36, 49]</span></span><br></pre></td></tr></table></figure>
+
+
+<p><strong>复杂度</strong><br>时间复杂度: <mycode>O(nlogn)</mycode><br>空间复杂度: <mycode>O(1)</mycode></p>
+<p><strong>稳定性</strong><br><mycode>不稳定</mycode></p>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.conardli.top/docs/algorithm/%E6%8E%92%E5%BA%8F/%E6%8E%92%E5%BA%8F.html">conardli大佬</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chengxiao/p/6129630.html">https://www.cnblogs.com/chengxiao/p/6129630.html</a></li>
+</ul>
+<style>
+mycode {
+    background-color: #fef4f5;
+    color: #FF6342;
+}
+</style></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Shen Shen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://shenshen0318.github.io/2021/03/25/%E6%8E%92%E5%BA%8F/">https://shenshen0318.github.io/2021/03/25/%E6%8E%92%E5%BA%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://shenshen0318.github.io" target="_blank">shenshen's study blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/">算法</a><a class="post-meta__tags" href="/tags/%E6%8E%92%E5%BA%8F/">排序</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2020/08/17/18/38/cat-5496162_1280.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/03/25/%E5%85%B3%E4%BA%8EsetInterval%E5%92%8CsetTImeout%E4%B8%AD%E7%9A%84this%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">关于setInterval和setTimeout中的this指向问题</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F"><span class="toc-number">1.</span> <span class="toc-text">冒泡排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-number">2.</span> <span class="toc-text">插入排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="toc-number">3.</span> <span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F"><span class="toc-number">4.</span> <span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="toc-number">5.</span> <span class="toc-text">归并排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A0%86%E6%8E%92%E5%BA%8F"><span class="toc-number">6.</span> <span class="toc-text">堆排序</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Shen Shen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
