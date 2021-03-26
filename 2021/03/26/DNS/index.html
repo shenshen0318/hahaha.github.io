@@ -1,0 +1,201 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DNS | shenshen's study blog</title><meta name="keywords" content="计网,DNS"><meta name="author" content="Shen Shen"><meta name="copyright" content="Shen Shen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="DNS 是域名系统(Domain Name System，缩写：DNS)是互联网的一项核心服务。它作为可以 将域名和IP地址 相互映射的一个 分布式数据库，从而使人更方便地访问互联网。 概念DNS 的主要作用就是将人们所熟悉的网址 (域名) “翻译”成电脑可以理解的 IP 地址，这个过程叫做 DNS 域名解析。打个比方，我们登百度的地址的时候，都是敲 www.baidu.com，进行登陆，难道你会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DNS">
+<meta property="og:url" content="https://shenshen0318.github.io/2021/03/26/DNS/index.html">
+<meta property="og:site_name" content="shenshen&#39;s study blog">
+<meta property="og:description" content="DNS 是域名系统(Domain Name System，缩写：DNS)是互联网的一项核心服务。它作为可以 将域名和IP地址 相互映射的一个 分布式数据库，从而使人更方便地访问互联网。 概念DNS 的主要作用就是将人们所熟悉的网址 (域名) “翻译”成电脑可以理解的 IP 地址，这个过程叫做 DNS 域名解析。打个比方，我们登百度的地址的时候，都是敲 www.baidu.com，进行登陆，难道你会">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg">
+<meta property="article:published_time" content="2021-03-26T07:36:11.000Z">
+<meta property="article:modified_time" content="2021-03-26T08:48:21.477Z">
+<meta property="article:author" content="Shen Shen">
+<meta property="article:tag" content="计网">
+<meta property="article:tag" content="DNS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://shenshen0318.github.io/2021/03/26/DNS/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-26 16:48:21'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">52</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">shenshen's study blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">DNS</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-26T07:36:11.000Z" title="发表于 2021-03-26 15:36:11">2021-03-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-26T08:48:21.477Z" title="更新于 2021-03-26 16:48:21">2021-03-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%BD%91/">计网</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><mycode>DNS</mycode> 是域名系统(Domain Name System，缩写：DNS)是互联网的一项核心服务。它作为可以 <mycode>将域名和IP地址</mycode> 相互映射的一个 <mycode>分布式数据库</mycode>，从而使人更方便地访问互联网。</p>
+<h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><p>DNS 的主要作用就是将人们所熟悉的网址 (域名) “翻译”成电脑可以理解的 IP 地址，这个过程叫做 DNS 域名解析。打个比方，我们登百度的地址的时候，都是敲 <a target="_blank" rel="noopener" href="http://www.baidu.com,进行登陆,难道你会去敲/">www.baidu.com，进行登陆，难道你会去敲</a> IP 地址登百度？明显，域名容易记忆。</p>
+<p>而且，一个域名往往对应多个 DNS 地址，如下图所示</p>
+<p><img src="/2021/03/26/DNS/%E5%9F%9F%E5%90%8D.jpeg" alt="域名"></p>
+<h4 id="浏览器输入-url-到返回页面的全过程"><a href="#浏览器输入-url-到返回页面的全过程" class="headerlink" title="浏览器输入 url 到返回页面的全过程"></a>浏览器输入 url 到返回页面的全过程</h4><p>接下来，就不得不说一道经典面试题了</p>
+<blockquote>
+<p>浏览器输入 url 到返回页面的全过程</p>
+</blockquote>
+<p>其实回答很简单(俗称天龙八步)</p>
+<p><strong>请求下载阶段：</strong><br>1.根据域名，进行DNS域名解析；<br>2.拿到解析的IP地址，建立TCP连接；<br>3.向IP地址，发送HTTP请求；<br>4.服务器处理请求；<br>5.返回响应结果；<br>6.关闭TCP连接；</p>
+<p><strong>解析渲染阶段：</strong><br>7.浏览器解析HTML；<br>8.浏览器布局渲染；<br>第 7 步和第 8 步还可以再扩展成浏览器的渲染5步骤：</p>
+<ol>
+<li>解析 HTML 文档生成 DOM 树；</li>
+<li>解析 CSS 文件生成 CSSOM 树；</li>
+<li>将 DOM 与 CSSOM 合并成一个渲染树</li>
+<li>根据渲染树来布局，计算每个节点的位置</li>
+<li>调用 GPU 绘制，合成图层，显示在屏幕上</li>
+</ol>
+<h4 id="DNS-是怎么做域名解析的"><a href="#DNS-是怎么做域名解析的" class="headerlink" title="DNS 是怎么做域名解析的"></a>DNS 是怎么做域名解析的</h4><p>解析流程就是 <strong>分级查询</strong>！</p>
+<p><img src="/2021/03/26/DNS/%E7%94%A8%E6%88%B7%E8%AF%B7%E6%B1%82%E5%8F%8ADNS%E8%A7%A3%E6%9E%90%E5%85%A8%E8%BF%87%E7%A8%8B.jpeg" alt="用户请求及DNS解析全过程"></p>
+<p>① 用户请求通过浏览器输入要访问网站的地址，例如：<a target="_blank" rel="noopener" href="http://www.toutiao.com./">www.toutiao.com。</a><span style="color:coral;font-weight:700">浏览器会在自己的缓存中查找 URL 对应的 IP 地址</span>。如果之前访问过，保存了这个 URL 对应的 IP 地址的缓存，那么就直接访问 IP 地址。如果没有缓存，进入到第2步。</p>
+<p>② 通过计算机本地的 <mycode>Host文件配置</mycode>，可以设置 <mycode>URL</mycode> 和 <mycode>IP</mycode> 地址的映射关系。比如 windows 下是通过C:\windwos\system32\driver\etc\hosts文件来设置的，linux 中则是/etc/named.confg文件。这里查找本地的 <mycode>Host 文件</mycode>，看是否有 <mycode>IP</mycode> 地址的缓存。如果在文件中依旧没有找到映射关系，进入第3步。</p>
+<p>③ 请求 <mycode>Local DNS Server</mycode>，通过本地运营商获取 <mycode>URL</mycode> 和 <mycode>IP</mycode> 的映射关系。如果在校园网，DNS 服务器就在学校，如果是小区网络，DNS 服务器是运营商提供的。总之这个服务器在物理位置上离发起请求的计算机比较近。<mycode>Local DNS Server</mycode> 缓存了大量的 DNS 解析结果。由于它的性能较好，物理上的距离又比较近，它通常会在很短的时间内返回指定域名的解析结果。80%的 DNS 解析需求在这一步就满足了。如果在这一步还是没有完成 DNS 解析，进入第4步。</p>
+<p>④ 通过 <mycode>Root DNS Server</mycode> 进行解析，ROOT DNS Server 会根据请求的 URL 返回给 Local DNS Server <mycode>顶级域名服务器</mycode> 的地址。例如：查询的是”.com”的域名，就查询 gTL对应的 <mycode>顶级域名服务器</mycode> 的地址。</p>
+<p>⑤ 返回顶级域名服务器的地址以后，访问对应的顶级域名服务器(gTLD、ccTLD、New gTLD)，并且返回 <mycode>Name Server</mycode> 服务器地址。这个 <mycode>Name Server</mycode> 就是网站注册的域名服务器，上面包含了网站 <mycode>URL</mycode> 和 <mycode>IP</mycode> 的对应信息。例如你在某个域名服务提供商申请的域名，这个域名就由他们的服务器来解析。这个 Name Server 是由域名提供商维护的。</p>
+<p>⑥ <mycode>Name Server</mycode> 会把指定域名的A记录或者 <mycode>CNAME</mycode> 返回给 Local DNS Server，并且设置一个 TTL。</p>
+<ul>
+<li><p><mycode>A (Address) 记录</mycode>：是用来指定主机名(或域名)对应的IP地址记录。用户可以将该域名下的网站服务器指向到自己的web server上。同时也可以设置您域名的二级域名。</p>
+</li>
+<li><p><mycode>CNAME：别名记录</mycode>：这种记录允许您将多个名字映射到另外一个域名。通常用于同时提供 WWW 和 MAIL 服务的计算机。例如，有一台计算机名为 “host.mydomain.com”(A记录)。它同时提供 WWW 和 MAIL 服务，为了便于用户访问服务。服务商从方便维护的角度，一般也建议用户使用 CNAME记录 绑定域名的。如果主机使用了双线IP，显然使用 CNAME 也要方便一些。</p>
+</li>
+<li><p><mycode>TTL(Time To Live)</mycode>：也就是设置这个DNS  解析在 Local DNS Server 上面的 <mycode>过期时间</mycode>。超过了这个过期时间，URL 和 IP 的映射就会被删除，需要获取还要请求 Name Server。</p>
+</li>
+</ul>
+<p>⑦ 如果此时获取的是 <mycode>A记录</mycode>，那么就可以直接访问网站的IP了。但是通常来说大型的网站都会返回CNAME，然后将其传给GTM Server。</p>
+<p><mycode>GTM</mycode>(Global Traffic Manager的简写)即 <mycode>全局流量管理</mycode>，基于网宿智能DNS、分布式监控体系，实现实时故障切换及全球负载均衡，保障应用服务的持续高可用性。<span style="color:coral; font-weight:700;">传给 GTM 的目的就是希望通过 GTM 的负载均衡机制，帮助用户找到最适合自己的服务器IP。</span></p>
+<p>也就是离自己最近，性能最好，服务器状态最健康的。而且大多数的网站会做 <mycode>CDN缓存</mycode>，此时就更需要使用 GTM 帮你找到网络节点中适合你的 <mycode>CDN缓存服务器</mycode>。</p>
+<p>⑧ 找到 <mycode>CDN</mycode> 缓存服务器以后，可以直接从服务器上面获取一些 <mycode>静态资源</mycode>，例如：HTML、CSS、JS和图片。但是一些动态资源，例如商品信息，订单信息，需要通过第9步。</p>
+<p>⑨ 对于没有缓存的 <mycode>动态资源</mycode> 需要从 <mycode>应用服务器获取</mycode>，在应用服务器与互联网之间通常有一层负载均衡器负责反向代理。由它路由到应用服务器上。</p>
+<h4 id="DNS-域名解析为什么用-UDP"><a href="#DNS-域名解析为什么用-UDP" class="headerlink" title="DNS 域名解析为什么用 UDP"></a>DNS 域名解析为什么用 UDP</h4><p>因为 <mycode>UDP</mycode> 快啊！UDP 的 DNS 协议只要一个请求、一个应答就好了。而使用基于 TCP 的 DNS 协议要三次握手、发送数据以及应答、四次挥手。但是 UDP 协议传输内容不能超过512字节。不过客户端向 DNS 服务器查询域名，一般返回的内容都不超过512字节，用 UDP 传输即可。</p>
+<h4 id="DNS-区域复制为什么用-TCP"><a href="#DNS-区域复制为什么用-TCP" class="headerlink" title="DNS 区域复制为什么用 TCP"></a>DNS 区域复制为什么用 TCP</h4><p>需要补充说明一下，<mycode>DNS</mycode> 中也有一个地方用到了 <mycode>TCP</mycode> 协议。那就是<strong>区域传送</strong>！</p>
+<p>DNS 的规范规定了 2 种类型的 DNS 服务器，一个叫 <mycode>主 DNS 服务器</mycode>，一个叫 <mycode>辅助 DNS 服务器</mycode>。在一个区中 主 DNS 服务器 从自己本机的数据文件中读取该区的 DNS 数据信息，而 辅助 DNS 服务器 则从区的 主 DNS 服务器中读取该区的 DNS 数据信息。<strong>当一个 辅助 DNS 服务器启动时，它需要与 主 DNS 服务器通信，并加载数据信息，这就叫做区传送（zone transfer）。</strong> 这种情况下，使用 <mycode>TCP</mycode> 协议。</p>
+<p>为什么区域传送用 TCP 协议？</p>
+<p>因为 TCP 协议 <mycode>可靠性好</mycode> 啊！你要从 主 DNS 上复制内容啊，你用不可靠的 UDP？ 因为 TCP 协议传输的内容大啊，你用最大只能传 512 字节的 UDP 协议？万一同步的数据大于 512 字节，你怎么办？</p>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://network.51cto.com/art/202003/613009.htm">https://network.51cto.com/art/202003/613009.htm</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/79350395">https://zhuanlan.zhihu.com/p/79350395</a></li>
+</ul>
+<style>
+mycode {
+    background-color: #fef4f5;
+    color: #FF6342;
+}
+</style></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Shen Shen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://shenshen0318.github.io/2021/03/26/DNS/">https://shenshen0318.github.io/2021/03/26/DNS/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://shenshen0318.github.io" target="_blank">shenshen's study blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%BD%91/">计网</a><a class="post-meta__tags" href="/tags/DNS/">DNS</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2021/02/20/18/11/sea-6034191_1280.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/03/25/%E6%8E%92%E5%BA%8F/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2020/08/17/18/38/cat-5496162_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">排序</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/03/06/HTTP状态码/" title="HTTP状态码"><img class="cover" src="https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-06</div><div class="title">HTTP状态码</div></div></a></div><div><a href="/2021/03/06/TCP和UDP/" title="TCP和UDP"><img class="cover" src="https://cdn.pixabay.com/photo/2020/08/17/18/38/cat-5496162_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-06</div><div class="title">TCP和UDP</div></div></a></div><div><a href="/2021/03/06/常见的WEB攻击分类/" title="常见的WEB攻击分类"><img class="cover" src="https://cdn.pixabay.com/photo/2020/08/17/18/38/cat-5496162_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-06</div><div class="title">常见的WEB攻击分类</div></div></a></div><div><a href="/2021/03/06/缓存/" title="缓存"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/08/16/03/dinosaur-5995333_1280.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-06</div><div class="title">缓存</div></div></a></div><div><a href="/2021/03/06/HTTP协议/" title="HTTP协议"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/06/19/29/pancakes-5989136_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-06</div><div class="title">HTTP协议</div></div></a></div><div><a href="/2021/03/08/HTTPS和HTTP2-0/" title="HTTPS和HTTP2.0"><img class="cover" src="https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-08</div><div class="title">HTTPS和HTTP2.0</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BE%93%E5%85%A5-url-%E5%88%B0%E8%BF%94%E5%9B%9E%E9%A1%B5%E9%9D%A2%E7%9A%84%E5%85%A8%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">浏览器输入 url 到返回页面的全过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS-%E6%98%AF%E6%80%8E%E4%B9%88%E5%81%9A%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84"><span class="toc-number">3.</span> <span class="toc-text">DNS 是怎么做域名解析的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS-%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-UDP"><span class="toc-number">4.</span> <span class="toc-text">DNS 域名解析为什么用 UDP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS-%E5%8C%BA%E5%9F%9F%E5%A4%8D%E5%88%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-TCP"><span class="toc-number">5.</span> <span class="toc-text">DNS 区域复制为什么用 TCP</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Shen Shen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
