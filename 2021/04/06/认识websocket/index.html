@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>认识websocket | shenshen's study blog</title><meta name="keywords" content="计网,websocket"><meta name="author" content="Shen Shen"><meta name="copyright" content="Shen Shen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="什么是 WebSocket 首先，我们需要弄明白，WebSocket 本质上一种计算机网络应用层的协议，用来弥补 http 协议在持久通信能力上的不足。 我们知道 http 协议本身是无状态协议，每一个新的 http 请求，只能通过客户端主动发起，通过 建立连接–&gt;传输数据–&gt;断开连接 的方式来传输数据，传送完连接就断开了，也就是这次 http 请求已经完全结束了（虽然 http1.1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="认识websocket">
+<meta property="og:url" content="https://shenshen0318.github.io/2021/04/06/%E8%AE%A4%E8%AF%86websocket/index.html">
+<meta property="og:site_name" content="shenshen&#39;s study blog">
+<meta property="og:description" content="什么是 WebSocket 首先，我们需要弄明白，WebSocket 本质上一种计算机网络应用层的协议，用来弥补 http 协议在持久通信能力上的不足。 我们知道 http 协议本身是无状态协议，每一个新的 http 请求，只能通过客户端主动发起，通过 建立连接–&gt;传输数据–&gt;断开连接 的方式来传输数据，传送完连接就断开了，也就是这次 http 请求已经完全结束了（虽然 http1.1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2021/02/06/19/29/pancakes-5989136_1280.jpg">
+<meta property="article:published_time" content="2021-04-06T12:54:10.000Z">
+<meta property="article:modified_time" content="2021-04-06T13:33:40.092Z">
+<meta property="article:author" content="Shen Shen">
+<meta property="article:tag" content="计网">
+<meta property="article:tag" content="websocket">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2021/02/06/19/29/pancakes-5989136_1280.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://shenshen0318.github.io/2021/04/06/%E8%AE%A4%E8%AF%86websocket/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-04-06 21:33:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">63</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">39</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2021/02/06/19/29/pancakes-5989136_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">shenshen's study blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">认识websocket</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-04-06T12:54:10.000Z" title="发表于 2021-04-06 20:54:10">2021-04-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-04-06T13:33:40.092Z" title="更新于 2021-04-06 21:33:40">2021-04-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%BD%91/">计网</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="什么是-WebSocket">什么是 WebSocket</h3>
+<p>首先，我们需要弄明白，<mycode>WebSocket</mycode> 本质上一种计算机网络应用层的协议，用来弥补 <mycode>http</mycode> 协议在持久通信能力上的不足。</p>
+<p>我们知道 <mycode>http</mycode> 协议本身是无状态协议，每一个新的 <mycode>http</mycode> 请求，只能通过客户端主动发起，通过 <mycode>建立连接–&gt;传输数据–&gt;断开连接</mycode> 的方式来传输数据，传送完连接就断开了，也就是这次 <mycode>http</mycode> 请求已经完全结束了（虽然 <mycode>http1.1</mycode> 增加了 <mycode>keep-alive</mycode> 请求头可以通过一条通道请求多次，但本质上还是一样的）。</p>
+<p>并且服务器是不能主动给客户端发送数据的（因为之前的请求得到响应后连接就断开了，之后服务器根本不知道谁请求过），客户端也不会知道之前请求的任何信息。</p>
+<p><mycode>Websocket</mycode> 其实是一个新协议，跟 <mycode>HTTP</mycode> 协议基本没有关系，只是为了兼容现有浏览器的握手规范而已，也就是说它是 <mycode>HTTP</mycode> 协议上的一种补充。可以通过这样一张图理解 有交集，但是并不是全部。</p>
+<p><img src="%E8%AE%A4%E8%AF%86websocket/websocket%E5%92%8Chttp.png" alt="websocket和http"></p>
+<h3 id="WebSocket-协议的原理">WebSocket 协议的原理</h3>
+<p>与 <mycode>http</mycode> 协议一样，<mycode>WebSocket</mycode> 协议也需要通过已建立的 <mycode>TCP</mycode> 连接来传输数据。具体实现上是通过 <mycode>http</mycode> 协议建立通道，然后在此基础上用真正的 <mycode>WebSocket</mycode> 协议进行通信，所以 <mycode>WebSocket</mycode> 协议和 <mycode>http</mycode> 协议是有一定的交叉关系的。</p>
+<p>首先我们来看个典型的 <mycode>Websocket</mycode> 握手（借用Wikipedia的。。）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;chat HTTP&#x2F;1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw&#x3D;&#x3D;</span><br><span class="line">Sec-WebSocket-Protocol: chat, superchat</span><br><span class="line">Sec-WebSocket-Version: 13</span><br><span class="line">Origin: http:&#x2F;&#x2F;example.com</span><br></pre></td></tr></table></figure>
+<p>这段类似 <mycode>HTTP</mycode> 协议的握手请求中，多了几个东西。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br></pre></td></tr></table></figure>
+<p>这个就是 <mycode>Websocket</mycode> 的核心了， <mycode>Connection</mycode> 和 <mycode>Upgrade</mycode> 字段告诉 Apache、Nginx 等服务器和客户端：注意啦，我发起的是 <mycode>Websocket</mycode> 协议。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw&#x3D;&#x3D;</span><br><span class="line">Sec-WebSocket-Protocol: chat, superchat</span><br><span class="line">Sec-WebSocket-Version: 13</span><br></pre></td></tr></table></figure>
+<ul>
+<li><mycode>Sec-WebSocket-Key</mycode> 是一个 Base64 encode 的值，这个是浏览器随机生成的，告诉服务器：不要忽悠我，我要验证你是不是真的是 Websocket 助理。</li>
+<li><mycode>Sec-WebSocket-Protocol</mycode> 是一个用户定义的字符串，用来区分同 URL 下，不同的服务所需要的协议。简单理解：今晚我要服务A，别搞错啦~</li>
+<li><mycode>Sec-WebSocket-Version</mycode> 是客户端告诉服务器我所使用的 Websocket Draft（协议版本）</li>
+</ul>
+<p>然后服务器会返回下列东西，表示已经接受到请求， 成功建立 <mycode>Websocket</mycode> 啦！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 101 Switching Protocols</span><br><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk&#x3D;</span><br><span class="line">Sec-WebSocket-Protocol: chat</span><br></pre></td></tr></table></figure>
+<ul>
+<li><mycode>Sec-WebSocket-Accept</mycode> 表明服务器接受了客户端的请求</li>
+<li><mycode>Sec-WebSocket-Protocol</mycode> 则是表示最终使用的协议。</li>
+</ul>
+<p><img src="/2021/04/06/%E8%AE%A4%E8%AF%86websocket/%E5%8E%9F%E7%90%86.png" alt="原理总结"></p>
+<h3 id="Websocket-的作用">Websocket 的作用</h3>
+<p>随着 Web 的发展，用户对于 Web 的实时推送要求也越来越高，在 WebSocket 出现之前，大多数情况下是通过客户端发起轮询来拿到服务端实时更新的数据，因为 HTTP1.x 协议有一个缺陷就是通信只能由客户端发起，服务端没法主动给客户端推送。这种方式在对实时性要求比较高的场景下，比如即时通讯、即时报价等，显然会十分低效，体验也不好。为了解决这个问题，便出现了 WebSocket 协议，实现了客户端和服务端双向通信的能力。介绍 WebSocket 之前，还是让我们先了解下轮询实现推送的方式。</p>
+<h4 id="短轮询（Polling）">短轮询（Polling）</h4>
+<p>短轮询的实现思路就是浏览器端每隔几秒钟向服务器端发送 HTTP 请求，服务端在收到请求后，不论是否有数据更新，都直接进行响应。在服务端响应完成，就会关闭这个 TCP 连接，代码实现也最简单，就是利用 <mycode>XHR</mycode> ，通过 <mycode>setInterval</mycode> 定时向后端发送请求，以获取最新的数据。</p>
+<ul>
+<li>优点：实现简单。</li>
+<li>缺点：会造成数据在一小段时间内不同步和大量无效的请求，安全性差、浪费资源。</li>
+</ul>
+<h4 id="长轮询（Long-Polling）">长轮询（Long-Polling）</h4>
+<p>客户端发送请求后服务器端不会立即返回数据，服务器端会阻塞请求连接不会立即断开，直到服务器端有数据更新或者是连接超时才返回，客户端才再次发出请求新建连接、如此反复从而获取最新数据。大致效果如下：</p>
+<p><img src="/2021/04/06/%E8%AE%A4%E8%AF%86websocket/%E9%95%BF%E8%BD%AE%E8%AF%A2.png" alt="长轮询"></p>
+<ul>
+<li>优点：比 Polling 做了优化，有较好的时效性。</li>
+<li>缺点：保持连接挂起会消耗资源，服务器没有返回有效数据，程序超时。</li>
+</ul>
+<p>从上面可以看出其实这两种方式，都是在不断地建立 HTTP 连接，然后等待服务端处理，可以体现 HTTP 协议的另外一个特点，<strong>被动性</strong>。</p>
+<h4 id="心跳保活">心跳保活</h4>
+<p>在实际使用 WebSocket 中，长时间不通消息可能会出现一些连接不稳定的情况，这些未知情况导致的连接中断会影响客户端与服务端之前的通信，<br>
+为了防止这种的情况的出现，有一种 <strong>心跳保活</strong> 的方法：客户端就像心跳一样每隔固定的时间发送一次 <mycode>ping</mycode> ，来告诉服务器，我还活着，而服务器也会返回 <mycode>pong</mycode> ，来告诉客户端，服务器还活着。<mycode>ping/pong</mycode> 其实是一条与业务无关的假消息，也称为 <strong>心跳包</strong>。</p>
+<p>可以在连接成功之后，每隔一个固定时间发送心跳包，比如 60s:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setInterval(() &#x3D;&gt; &#123;</span><br><span class="line">    ws.send(&#39;这是一条心跳包消息&#39;);</span><br><span class="line">&#125;, 60000)</span><br></pre></td></tr></table></figure>
+<h4 id="WebSocket-协议的应用场景">WebSocket 协议的应用场景</h4>
+<ul>
+<li>即时聊天通信</li>
+<li>多玩家游戏</li>
+<li>在线协同编辑/编辑</li>
+<li>实时数据流的拉取与推送</li>
+<li>体育/游戏实况</li>
+<li>实时地图位置</li>
+</ul>
+<h4 id="WebSocket-协议的优缺点">WebSocket 协议的优缺点</h4>
+<p><strong>优点：</strong></p>
+<ul>
+<li>WebSocket协议一旦建议后，互相沟通所消耗的请求头是很小的</li>
+<li>服务器可以向客户端推送消息了</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>少部分浏览器不支持，浏览器支持的程度与方式有区别</li>
+</ul>
+<p>参考；</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904001654226958">https://juejin.cn/post/6844904001654226958</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20215561">https://www.zhihu.com/question/20215561</a></li>
+</ul>
+<style>
+mycode {
+    background-color: #fef4f5;
+    color: #FF6342;
+}
+</style></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Shen Shen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://shenshen0318.github.io/2021/04/06/%E8%AE%A4%E8%AF%86websocket/">https://shenshen0318.github.io/2021/04/06/%E8%AE%A4%E8%AF%86websocket/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://shenshen0318.github.io" target="_blank">shenshen's study blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%BD%91/">计网</a><a class="post-meta__tags" href="/tags/websocket/">websocket</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2021/02/06/19/29/pancakes-5989136_1280.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/04/06/%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7%E4%BA%8C%E4%B8%89%E4%BA%8B/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">异常捕获二三事</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/03/06/HTTP状态码/" title="HTTP状态码"><img class="cover" src="https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-06</div><div class="title">HTTP状态码</div></div></a></div><div><a href="/2021/03/06/TCP和UDP/" title="TCP和UDP"><img class="cover" src="https://cdn.pixabay.com/photo/2020/08/17/18/38/cat-5496162_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-06</div><div class="title">TCP和UDP</div></div></a></div><div><a href="/2021/03/06/常见的WEB攻击分类/" title="常见的WEB攻击分类"><img class="cover" src="https://cdn.pixabay.com/photo/2020/08/17/18/38/cat-5496162_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-06</div><div class="title">常见的WEB攻击分类</div></div></a></div><div><a href="/2021/03/06/缓存/" title="缓存"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/08/16/03/dinosaur-5995333_1280.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-06</div><div class="title">缓存</div></div></a></div><div><a href="/2021/03/06/HTTP协议/" title="HTTP协议"><img class="cover" src="https://cdn.pixabay.com/photo/2021/02/06/19/29/pancakes-5989136_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-06</div><div class="title">HTTP协议</div></div></a></div><div><a href="/2021/03/08/HTTPS和HTTP2-0/" title="HTTPS和HTTP2.0"><img class="cover" src="https://cdn.pixabay.com/photo/2020/11/27/12/59/woman-5781862_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-08</div><div class="title">HTTPS和HTTP2.0</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-WebSocket"><span class="toc-number">1.</span> <span class="toc-text">什么是 WebSocket</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebSocket-%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">WebSocket 协议的原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Websocket-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">Websocket 的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%AD%E8%BD%AE%E8%AF%A2%EF%BC%88Polling%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">短轮询（Polling）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%95%BF%E8%BD%AE%E8%AF%A2%EF%BC%88Long-Polling%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">长轮询（Long-Polling）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BF%83%E8%B7%B3%E4%BF%9D%E6%B4%BB"><span class="toc-number">3.3.</span> <span class="toc-text">心跳保活</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WebSocket-%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">3.4.</span> <span class="toc-text">WebSocket 协议的应用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WebSocket-%E5%8D%8F%E8%AE%AE%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">3.5.</span> <span class="toc-text">WebSocket 协议的优缺点</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Shen Shen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
